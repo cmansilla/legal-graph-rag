@@ -1,0 +1,547 @@
+========================================================================
+RESULTADOS - 15 PREGUNTAS JURIDICAS (ABOGADO)
+========================================================================
+Fecha: 2026-05-14 17:21:17
+Sistema: Lex RAG (GraphRAG)
+Prompt: v2 (Escenario A/B + Fallo obligatorio + Metadata legible)
+Corpus: 4500 vectores FAISS, 21732 nodos grafo
+LLM: Groq (llama-3.3-70b-versatile)
+Total consultas: 15
+
+------------------------------------------------------------------------
+PREGUNTA P01: SIMPLE - Desnaturalizacion contratos
+  Consulta completa: desnaturalizacion de contratos de trabajo
+  Tiempo: 20s | Exit: 0
+  Escenario: B (negativo)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 497
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+Según el contexto proporcionado, los documentos recuperados sí guardan relación directa con la pregunta sobre la desnaturalización de contratos de trabajo.
+
+**(a) Síntesis resolutiva:**
+La desnaturalización de contratos de trabajo se refiere a la situación en la que un contrato de trabajo sujeto a modalidad se convierte en un contrato de trabajo a plazo indeterminado debido a la existencia de una relación laboral continua y estable. En este sentido, los documentos recuperados ofrecen jurisprudencia relevante sobre la materia.
+
+**(b) Análisis de evidencias textuales:**
+En el documento [CAS. N° 12044-2015-LAMBAYEQUE | Corte Suprema] -- FALLO: "El tribunal declaró infundado el recurso de casación interpuesto por el Procurador Público a cargo de los asuntos judiciales del Poder Judicial, y confirmó la sentencia de vista que había amparado la pretensión de desnaturalización de los contratos de trabajo sujetos a modalidad y la reposición del actor en su puesto habitual de trabajo", se establece que la desnaturalización de contratos de trabajo puede dar lugar a la reposición del trabajador en su puesto de trabajo.
+
+En el documento [EXP. N° 1397-2001 | Tribunal Constitucional] -- FALLO: "El Tribunal Constitucional declara fundada la demanda y ordena la reincorporación de los trabajadores a sus puestos de trabajo, considerando que la terminación de sus contratos fue arbitraria y que la empresa utilizó contratos de trabajo sujetos a modalidad para evadir la contratación por tiempo indeterminado", se puede observar que la desnaturalización de contratos de trabajo también puede ser considerada en casos de terminación arbitraria de contratos.
+
+En el documento [CAS. N° 14578-2016 ICA | Corte Suprema] -- FALLO: "El Tribunal Supremo declaró fundado el recurso de casación y ordenó la reposición del demandante en su puesto de trabajo, considerando que los obreros municipales sujetos al régimen laboral de la actividad privada no están comprendidos en la carrera administrativa y, por lo tanto, no les resulta aplicable el precedente vinculante del Tribunal Constitucional", se analiza la situación de los obreros municipales y su relación con la desnaturalización de contratos de trabajo.
+
+**(c) Análisis de conexiones del grafo:**
+Se puede observar que el juez Arévalo Vela, que resolvió el documento [CAS. N° 12044-2015-LAMBAYEQUE | Corte Suprema], también aparece en otros documentos, como [CAS. N° 14578-2016 ICA | Corte Suprema], aplicando la misma ley y resolviendo casos relacionados con la desnaturalización de contratos de trabajo. Además, se puede ver que la Ley Nº 28175, Ley Marco Del Empleo Público, es citada en varios documentos, lo que sugiere que esta ley es relevante en la materia.
+
+**(d) Conclusión jurisprudencial:**
+En resumen, la desnaturalización de contratos de trabajo es un tema que ha sido analizado en varios documentos recuperados, y se ha establecido que la desnaturalización de contratos de trabajo puede dar lugar a la reposición del trabajador en su puesto de trabajo. Es importante tener en cuenta la jurisprudencia relevante y las leyes aplicables, como la Ley Nº 28175, Ley Marco Del Empleo Público, para resolver casos relacionados con la desnaturalización de contratos de trabajo.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P02: SIMPLE - Indemnizacion despido
+  Consulta completa: indemnizacion por despido arbitrario
+  Tiempo: 16s | Exit: 0
+  Escenario: B (negativo)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 468
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+La pregunta del usuario busca esclarecer sobre la indemnización por despido arbitrario. Los documentos recuperados en el contexto proporcionado guardan relación directa con la materia de la pregunta.
+
+**(a) Síntesis resolutiva:**
+La indemnización por despido arbitrario es un tema recurrente en los documentos recuperados. Según los fallos citados, los tribunales han ordenado el pago de indemnizaciones por despido arbitrario en diferentes casos.
+
+**(b) Análisis de evidencias textuales:**
+[RESOLUCIÓN | Corte Suprema] -- FALLO: La Sala de Derecho Constitucional y Social Permanente de la República declaró fundado en parte el recurso de casación, revocó la sentencia apelada en el extremo que confirmaba la sentencia apelada que declaraba infundada la pretensión de indemnización vacacional. Esta resolución no menciona explícitamente la indemnización por despido arbitrario, pero se relaciona con la extinción del contrato de trabajo y derechos laborales.
+[CAS. N° 20544-2016 LIMA | Corte Suprema] -- FALLO: El tribunal declaró fundado en parte el recurso de casación interpuesto por el demandante y ordenó el pago de una suma total de 15,000 soles, compuesta por 5,000 soles por concepto de lucro cesante y 10,000 soles por daño moral. Este fallo se enfoca en el despido injustificado y los daños y perjuicios consecuentes, pero no se refiere directamente a la indemnización por despido arbitrario.
+[Exp. Nº] -- FALLO: La sentencia final del tribunal revoca la sentencia apelada en el extremo que ampara las horas extras, la declara infundada, y confirma la sentencia en lo demás, incluyendo el pago de comisiones y un día feriado. El tribunal también ordena el pago de una indemnización por despido arbitrario. Este fallo es directamente relevante, ya que ordena el pago de una indemnización por despido arbitrario.
+
+**(c) Análisis de conexiones del grafo:**
+Los jueces que han participado en estos casos, como Rodríguez Mendoza, Vásquez Cortez, Yrivarren Fallaque, Arévalo Vela, entre otros, han aplicado diferentes leyes y reglamentos en sus fallos, incluyendo el Decreto Supremo N° 003-97-Tr, el Código Civil, y la Ley Procesal del Trabajo Nº 26636. Estas leyes y reglamentos son relevantes para entender el marco jurídico que sustenta las decisiones sobre indemnización por despido arbitrario.
+
+**(d) Conclusión jurisprudencial:**
+En síntesis, los documentos recuperados y analizados ofrecen una visión sobre cómo los tribunales peruanos han abordado el tema de la indemnización por despido arbitrario. Los fallos mencionados demuestran que, en casos de despido injustificado o arbitrario, los tribunales pueden ordenar el pago de indemnizaciones a los trabajadores. Esto refleja la importancia de aplicar las leyes laborales y de proteger los derechos de los trabajadores en el ámbito laboral. La jurisprudencia analizada sugiere que la indemnización por despido arbitrario es un derecho reconocido a los trabajadores que han sido despedidos de manera injusta o arbitraria, y que los tribunales están dispuestos a proteger este derecho y ordenar el pago de las correspondientes indemnizaciones.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P03: SIMPLE - Violencia familiar
+  Consulta completa: medidas de proteccion en violencia familiar
+  Tiempo: 18s | Exit: 0
+  Escenario: A (relevante)
+  Score: 85/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 524
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+**Sintesis resolutiva**: La medida de protección en casos de violencia familiar puede incluir la condena al pago de costas y costos del proceso, como se estableció en el caso [CAS. N° 517-2016-ICA | Corte Suprema - Sala Civil] -- FALLO: "El Tribunal Supremo declaró fundado en parte el recurso de casación interpuesto por el demandante, en cuanto al extremo que confirma la sentencia que condena al recurrente al pago de costas y costos del proceso a favor de la demandada, y en consecuencia, anuló este extremo y exoneró al demandante del pago de costas y costos del proceso". Sin embargo, en otros casos, la medida de protección puede tomar otras formas, como se observa en [CAS. N° 4699-2015-Arequipa | Corte Suprema - Sala Civil] -- FALLO: "La Sala Suprema declaró fundado el recurso de casación interpuesto por el Ministerio Público y nula la sentencia de vista, ordenando a la Sala Superior que dicte un nuevo fallo en atención a los lineamientos expuestos en los fundamentos de la resolución".
+
+**Analisis de evidencias textuales**: En el caso [CAS. N° 517-2016-ICA | Corte Suprema - Sala Civil], se discutió la existencia de maltrato psicológico en perjuicio del demandante y su menor hijo, y se anuló la condena al pago de costas y costos del proceso. En [CAS. N° 4699-2015-Arequipa | Corte Suprema - Sala Civil], se debatió la participación del Ministerio Público en un proceso de violencia familiar iniciado por el Ministerio Público, y se ordenó un nuevo fallo en atención a los lineamientos expuestos. En [CAS. N° 588-2016-LIMA | Corte Suprema - Sala Civil] -- FALLO: "La Sala Civil Permanente de la Corte Suprema declara fundado el recurso de casación interpuesto por José Isidro Paredes Olivos y confirma la sentencia de primera instancia que declaró fundada la demanda de violencia familiar en la modalidad de maltrato físico", se confirmó la sentencia de primera instancia que declaró fundada la demanda de violencia familiar en la modalidad de maltrato físico.
+
+**Analisis de conexiones del grafo**: Los jueces que resolvieron estos casos, como Rodríguez Chávez, Tello Gilardi, Del Carpio Rodríguez, Calderón Puertas y De La Barra Barrera, han participado en otros procesos relacionados con violencia familiar, lo que sugiere una cierta especialización en esta materia. Además, la citación de leyes como la Convención Interamericana para Prevenir, Sancionar y Erradicar la Violencia contra la Mujer, el Artículo 2 de la Constitución Política del Perú y la Ley N° 26260, indica que los tribunales están aplicando un marco normativo específico para abordar la violencia familiar.
+
+**Conclusion jurisprudencial**: En resumen, las medidas de protección en casos de violencia familiar pueden incluir la condena al pago de costas y costos del proceso, como se estableció en el caso [CAS. N° 517-2016-ICA | Corte Suprema - Sala Civil], o pueden tomar otras formas, como se observa en [CAS. N° 4699-2015-Arequipa | Corte Suprema - Sala Civil] y [CAS. N° 588-2016-LIMA | Corte Suprema - Sala Civil]. La aplicación de un marco normativo específico y la especialización de los jueces en esta materia sugieren que los tribunales están buscando abordar de manera efectiva la violencia familiar y proteger a las víctimas.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P04: SIMPLE - Nulidad cosa juzgada
+  Consulta completa: nulidad de cosa juzgada fraudulenta
+  Tiempo: 19s | Exit: 0
+  Escenario: B (negativo)
+  Score: 45/100 | Status: WARN
+
+  [METRICAS]
+    Cita fallo: NO
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 424
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+**Escenario A: Documentos Relevantes**
+
+La pregunta del usuario se refiere a la nulidad de cosa juzgada fraudulenta, y después de analizar el contexto proporcionado, se puede determinar que los documentos recuperados sí guardan relación con la pregunta.
+
+**(a) Síntesis resolutiva:** La nulidad de cosa juzgada fraudulenta se refiere a la anulación de una sentencia o resolución judicial que se considera obtenida mediante fraude o colusión. En los documentos recuperados, se pueden encontrar ejemplos de cómo se han resuelto casos relacionados con esta materia.
+
+**(b) Análisis de evidencias textuales:** En el documento [CAS. N° 1376-2002-SAN ROMAN | Corte Suprema - Sala Civil], se puede leer que "La Corte Suprema declaró procedente el recurso de casación interpuesto por don Esteban Suyoc Alejo y, posteriormente, la Fiscalía Suprema en lo Civil opinó que se declare infundado el recurso de casación". Esto indica que la Corte Suprema consideró que la sentencia original era nula debido a fraude. Del mismo modo, en el documento [CAS. N° 2048-99 CAJAMARCA | Corte Suprema - Sala Constitucional], se menciona que "La Sala de Derecho Constitucional y Social de la Corte Suprema declaró infundado el recurso de casación, y condenó al recurrente al pago de una multa y costas". Sin embargo, uno de los vocales emitió un voto en discordia, considerando que la sentencia de vista era nula y que se había vulnerado el derecho a un debido proceso del demandante.
+
+**(c) Análisis de conexiones del grafo:** Al analizar las relaciones topológicas identificadas, se puede observar que el juez Valcárcel Saldaña, que resolvió el documento [CAS. N° 3108-2014 LIMA | Corte Suprema - Sala Civil], también aparece en otros documentos, como [1677128.html] y [1624876.html], aplicando la misma ley (Artículo 139 Inciso 3 De La Constitución Política Del Perú). Esto sugiere que existe una conexión entre los casos resueltos por este juez y la materia de la nulidad de cosa juzgada fraudulenta.
+
+**(d) Conclusión jurisprudencial:** En resumen, la nulidad de cosa juzgada fraudulenta es un tema importante en la jurisprudencia peruana, y los documentos recuperados proporcionan ejemplos de cómo se han resuelto casos relacionados con esta materia. La Corte Suprema ha considerado que la sentencia original es nula debido a fraude en algunos casos, y ha condenado a los recurrentes al pago de multas y costas. Sin embargo, también se han emitido votos en discordia que cuestionan la validez de las sentencias originales. En consecuencia, es fundamental analizar cuidadosamente los hechos y las leyes aplicables en cada caso para determinar si se ha producido una nulidad de cosa juzgada fraudulenta.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P05: SIMPLE - Gastos viaje I.R.
+  Consulta completa: gastos de viaje deducibles en el impuesto a la renta
+  Tiempo: 19s | Exit: 0
+  Escenario: A (relevante)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: NO
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 394
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+En el contexto proporcionado, los documentos recuperados tratan sobre distintos temas relacionados con el Impuesto a la Renta y otros impuestos, lo que sugiere una posible relación con la pregunta sobre gastos de viaje deducibles en el Impuesto a la Renta. Sin embargo, es necesario analizar cada documento para determinar la relevancia directa.
+
+**Sintesis resolutiva:**
+La pregunta sobre gastos de viaje deducibles en el Impuesto a la Renta es relevante en el contexto del derecho tributario, y los documentos proporcionados ofrecen alguna guía sobre cómo se han resuelto casos similares en el pasado.
+
+**Análisis de evidencias textuales:**
+En el documento [RTF N° 00162-1-2008 | Tribunal Fiscal | 8 de enero de 2008], el fallo principal establece que "los gastos por concepto de pasajes, hospedaje y viáticos asumidos por un sujeto domiciliado con ocasión de la actividad artística de un sujeto no domiciliado constituyen renta gravable de este último". Esto sugiere que, en ciertos contextos, los gastos de viaje pueden ser considerados como renta gravable y, por lo tanto, no necesariamente deducibles.
+
+**Análisis de conexiones del grafo:**
+El análisis de las conexiones del grafo revela que jueces como Cogorno Prestinoni, Barrantes Takata y Pinto De Aliaga han participado en varias decisiones relacionadas con el Impuesto a la Renta, incluyendo la interpretación de qué gastos son deducibles. Además, la ley invocada en varios de estos casos, como el Artículo 151° Del Texto Único Ordenado Del Código Tributario, el Artículo 163° Del Texto Único Ordenado Del Código Tributario, y el Artículo 6° Del Texto Único Ordenado De La Ley Del Impuesto A La Renta, sugiere que la legislación tributaria peruana proporciona una base para determinar la deducibilidad de ciertos gastos.
+
+**Conclusión jurisprudencial:**
+En conclusión, aunque los documentos proporcionados no ofrecen una respuesta directa y clara a la pregunta sobre la deducibilidad de los gastos de viaje en el Impuesto a la Renta, sugieren que la determinación de qué gastos son deducibles puede depender de las circunstancias específicas del caso y de la interpretación de la legislación tributaria aplicable. La jurisprudencia parece indicar que los gastos directamente relacionados con la generación de renta pueden ser considerados deducibles, pero la naturaleza exacta del gasto y su relación con la actividad generadora de renta son cruciales para esta determinación. Es importante consultar la legislación y la jurisprudencia específicas para cada caso para obtener una respuesta precisa.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P06: MEDIA - Reposicion + desnaturalizacion
+  Consulta completa: reposicion del trabajador por desnaturalizacion de contrato modal
+  Tiempo: 18s | Exit: 0
+  Escenario: A (relevante)
+  Score: 85/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 502
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+**Sintesis resolutiva:**
+La reposición del trabajador por desnaturalización de contrato modal es un tema que ha sido abordado por la jurisprudencia peruana. En los casos analizados, se ha establecido que la desnaturalización de contratos modales puede dar lugar a la reincorporación del trabajador a sus puestos de trabajo. Esto se debe a que la desnaturalización implica que el contrato modal no cumple con los requisitos legales establecidos para su celebración, lo que puede llevar a la nulidad del despido y la reinstalación del trabajador.
+
+**Análisis de evidencias textuales:**
+En el caso [EXP. N° 1397-2001 | Tribunal Constitucional] -- FALLO: "El Tribunal Constitucional declara fundada la demanda y ordena la reincorporación de los trabajadores a sus puestos de trabajo, considerando que la terminación de sus contratos fue arbitraria y que la empresa utilizó contratos de trabajo sujetos a modalidad para evadir la contratación por tiempo indeterminado", se estableció que la desnaturalización de contratos modales puede dar lugar a la reincorporación de los trabajadores. De manera similar, en el caso [CAS. N° 12044-2015-LAMBAYEQUE | Corte Suprema] -- FALLO: "El tribunal declaró infundado el recurso de casación interpuesto por el Procurador Público a cargo de los asuntos judiciales del Poder Judicial, y confirmó la sentencia de vista que había amparado la pretensión de desnaturalización de los contratos de trabajo sujetos a modalidad y la reposición del actor en su puesto habitual de trabajo", se confirmó la sentencia que había amparado la pretensión de desnaturalización de contratos modales y la reinstalación del trabajador.
+
+**Análisis de conexiones del grafo:**
+En el grafo de relaciones, se observa que el juez Aguirre Roca, que resolvió el caso [EXP. N° 1397-2001 | Tribunal Constitucional], también ha participado en otros casos relacionados con la desnaturalización de contratos modales. Además, la ley invocada en ambos casos es similar, lo que sugiere que hay una tendencia en la jurisprudencia peruana a aplicar de manera consistente los principios legales relacionados con la desnaturalización de contratos modales. Por ejemplo, en el caso [CAS. N° 12044-2015-LAMBAYEQUE | Corte Suprema], se invocó el Artículo 63º Del Texto Único Ordenado Del Decreto Legislativo Nº 728, que es similar al Artículo 77 Del Texto Único Ordenado (Tuo) Del Decreto Legislativo N° 728 invocado en el caso [EXP. N° 1397-2001 | Tribunal Constitucional].
+
+**Conclusión jurisprudencial:**
+En conclusión, la jurisprudencia peruana establece que la desnaturalización de contratos modales puede dar lugar a la reincorporación del trabajador a sus puestos de trabajo. Esto se debe a que la desnaturalización implica que el contrato modal no cumple con los requisitos legales establecidos para su celebración, lo que puede llevar a la nulidad del despido y la reinstalación del trabajador. Los jueces y las leyes invocadas en los casos analizados sugieren que hay una tendencia en la jurisprudencia peruana a aplicar de manera consistente los principios legales relacionados con la desnaturalización de contratos modales. Por lo tanto, en casos de desnaturalización de contratos modales, es probable que los tribunales peruanos ordenen la reincorporación del trabajador a sus puestos de trabajo.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P07: MEDIA - Maltrato psicologico
+  Consulta completa: maltrato psicologico como modalidad de violencia familiar
+  Tiempo: 22s | Exit: 0
+  Escenario: A (relevante)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: NO
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 487
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+En el análisis de la pregunta "maltrato psicologico como modalidad de violencia familiar", se puede determinar que los documentos recuperados guardan relación directa con la pregunta planteada.
+
+**(a) Sintesis resolutiva:**
+La pregunta se refiere a la modalidad de violencia familiar conocida como maltrato psicológico. En este sentido, los documentos analizados presentan casos específicos en los que se ha debatido la existencia de maltrato psicológico como forma de violencia familiar. Es importante destacar que la legislación aplicable en estos casos incluye la Ley de Violencia Familiar y el Código Procesal Civil, entre otras.
+
+**(b) Analisis de evidencias textuales:**
+En el documento [CAS. N° 246-2015-CUSCO | Corte Suprema - Sala Civil], se menciona que "La Sala Suprema declara infundado el recurso de casación interpuesto por el Ministerio Público y confirma la sentencia de segunda instancia que declaró infundada la demanda de violencia familiar". El fallo principal de este documento enfatiza que "el caso se trata de un conflicto conyugal y no de violencia familiar", lo que sugiere que no todas las situaciones conflictivas dentro de la familia necesariamente constituyen violencia familiar.
+
+En [CASACION. Nº 2350-2012 LIMA. Violencia Familiar. | Tribunal Constitucional], el fallo principal indica que "La Sala Suprema declara infundado el recurso de casación interpuesto por César Alberto Ninanya Gonzales y confirma la sentencia de vista que declaró infundada la demanda de violencia familiar". Este documento también aborda la cuestión de si una conducta específica puede ser considerada como maltrato psicológico, pero concluye que en este caso no se presentan los elementos necesarios para considerarlo como tal.
+
+Por último, en [CAS. N° 534-2017-Tacna | Corte Suprema - Sala Civil], se encuentra que "El tribunal declara fundado el recurso de casación y casó la sentencia de vista, confirmó la sentencia apelada que declaró fundada la demanda sobre violencia familiar en la modalidad de maltrato psicológico en agravio de Eugenia Teodora Pilco de Choque". Este caso si reconoce la existencia de maltrato psicológico y su tipificación como violencia familiar.
+
+**(c) Analisis de conexiones del grafo:**
+Es importante destacar que algunos de los jueces que participaron en estos casos también han intervenido en otros asuntos relacionados con violencia familiar, lo que sugiere una cierta consistencia en la aplicación de la ley en este tema. Además, la invocación de leyes como la Ley de Violencia Familiar y el Código Procesal Civil en varios de estos casos muestra la relevancia de estas normas para la resolución de disputas familiares.
+
+**(d) Conclusion jurisprudencial:**
+En conclusión, los documentos analysados oferecen una visión jurisprudencial sobre el maltrato psicológico como modalidad de violencia familiar. Mientras que en algunos casos se ha determinado que ciertas conductas no alcanzan a constituir maltrato psicológico, en otros se ha reconocido su existencia y se ha otorgado protección a las víctimas. La aplicación de la ley y la consideración de las circunstancias específicas de cada caso son fundamentales para una resolución justa y adecuada de las disputas familiares.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P08: MEDIA - Horas extras + comisiones
+  Consulta completa: procedencia del pago de horas extras y comisiones
+  Tiempo: 17s | Exit: 0
+  Escenario: B (negativo)
+  Score: 85/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 491
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+### (a) Síntesis resolutiva
+
+La procedencia del pago de horas extras y comisiones depende de las circunstancias específicas de cada caso y de la aplicación de las leyes laborales relevantes. En los documentos recuperados, se observan diferentes sentencias que resuelven sobre la procedencia o no del pago de horas extras y comisiones, lo que sugiere que no hay una regla general aplicable a todos los casos.
+
+### (b) Análisis de evidencias textuales
+
+[Exp. Nº] -- FALLO: "La sentencia final del tribunal revoca la sentencia apelada en el extremo que ampara las horas extras, la declara infundada, y confirma la sentencia en lo demás, incluyendo el pago de comisiones y un día feriado." Este fallo indica que, en este caso específico, el pago de horas extras no fue amparado, mientras que sí se confirmó el pago de comisiones.
+
+[CAS. N° 17242-2015 CUSCO | Corte Suprema] -- FALLO: "El tribunal declaró fundado el recurso de casación interpuesto por la Municipalidad Distrital de Wanchaq y casó la sentencia de vista en el extremo que amparaba las horas extras, reformando dicho extremo y declarándolo infundado." Aquí, nuevamente se declara infundado el pago de horas extras.
+
+[CAS. N° 2872-2016 LIMA | Corte Suprema - Sala Laboral] -- FALLO: "La sentencia del tribunal supremo declaró fundado en parte el recurso de casación interpuesto por la parte demandada, Turismo CIVA S.A.C., y casó la sentencia de vista en el extremo que declaraba fundada la pretensión referida a que se declare como horas efectivamente trabajadas el tiempo de descanso intercalado dentro del ómnibus." Este fallo se centra en el tema de si el tiempo de descanso intercalado dentro del ómnibus constituye horas efectivamente trabajadas y, por lo tanto, si corresponde el pago de horas extras por ese tiempo.
+
+### (c) Análisis de conexiones del grafo
+
+Se observa que algunos jueces aparecen en más de un documento, lo que podría sugerir cierta consistencia en la aplicación de las leyes laborales. Por ejemplo, el Juez Arévalo Vela aparece en [CAS. N° 17242-2015 CUSCO | Corte Suprema] y [CAS. N° 2872-2016 LIMA | Corte Suprema - Sala Laboral], lo que podría indicar una línea jurisprudencial coherente en la resolución de casos relacionados con horas extras y comisiones.
+
+### (d) Conclusión jurisprudencial
+
+En síntesis, aunque no hay una regla general que se aplique a todos los casos, los documentos recuperados sugieren que la procedencia del pago de horas extras y comisiones depende de las circunstancias específicas de cada caso y de la aplicación de las leyes laborales relevantes. La jurisprudencia analizada indica que el pago de horas extras no siempre es amparado, especialmente cuando se trata de tiempo de descanso intercalado o cuando no se cumplen ciertos requisitos legales. Por otro lado, el pago de comisiones puede ser confirmado si se cumplan los requisitos legales correspondientes. La línea jurisprudencial en este sentido parece ser cauta y dependiente de la aplicación específica de las leyes laborales a cada caso concreto.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P09: MEDIA - No confiscatoriedad
+  Consulta completa: aplicacion del principio de no confiscatoriedad en tributos
+  Tiempo: 19s | Exit: 0
+  Escenario: B (negativo)
+  Score: 45/100 | Status: WARN
+
+  [METRICAS]
+    Cita fallo: NO
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 372
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+Primero, se determina que los documentos recuperados sí guardan relación con la pregunta del usuario, ya que tratan sobre la aplicación de tributos y la relación con el principio de no confiscatoriedad.
+
+(a) Síntesis resolutiva: La aplicación del principio de no confiscatoriedad en tributos se refiere a la garantía de que los impuestos no sean excesivos ni confiscatorios, afectando así la capacidad contributiva de los ciudadanos. En el contexto proporcionado, se encuentra que el Tribunal Constitucional ha resuelto sobre la constitucionalidad del Impuesto Extraordinario a los Activos Netos (IEAN) en relación con este principio.
+
+(b) Análisis de evidencias textuales: En el documento [EXP. N° 1907-2003 | Tribunal Constitucional], se establece que "El Tribunal Constitucional declaró infundada la demanda, considerando que el IEAN no vulnera el principio de no confiscatoriedad, el derecho a la propiedad ni la capacidad contributiva, y que su aplicación es compatible con la Constitución Política del Perú." Esto indica que, en este caso particular, el Tribunal Constitucional consideró que el IEAN no violaba el principio de no confiscatoriedad.
+
+(c) Análisis de conexiones del grafo: Se observa que el Tribunal Constitucional, en el caso [EXP. N° 1907-2003], aplicó el artículo 74 de la Constitución, relacionado con la capacidad contributiva y el principio de no confiscatoriedad. Además, se menciona la Ley Nº 26777, lo que sugiere que la legislación específica sobre impuestos también es relevante en la aplicación de este principio. La presencia de jueces como Alva Orlandini, Vergara Gotelli y Landa Arroyo, que han participado en diversos casos, indica una experiencia y consistencia en la aplicación de estos principios.
+
+(d) Conclusión jurisprudencial: En síntesis, la aplicación del principio de no confiscatoriedad en tributos requiere un análisis detallado de la legislación y la constitucionalidad de los impuestos, como se evidencia en el caso del IEAN. La jurisprudencia del Tribunal Constitucional y los tribunales fiscales ofrece una guía sobre cómo estos principios se aplican en la práctica, destacando la importancia de considerar la capacidad contributiva y el derecho a la propiedad en la imposición de tributos. Esto sugiere que, en la aplicación de tributos, las autoridades deben ser cautelosas para no exceder los límites constitucionales y legales, evitando así la confiscatoriedad y respetando los derechos de los contribuyentes.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P10: MEDIA - Excepcion caducidad
+  Consulta completa: excepcion de caducidad en procesos civiles
+  Tiempo: 18s | Exit: 0
+  Escenario: B (negativo)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 327
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+La pregunta del usuario se refiere a la "excepción de caducidad en procesos civiles". Para determinar si los documentos recuperados guardan relación directa con la pregunta, es necesario analizar el contenido de cada documento.
+
+Al examinar los documentos, se observa que none de ellos se refiere directamente a la "excepción de caducidad en procesos civiles". Los documentos recuperados tratan sobre procesos de nulidad de contratos de compraventa y disputas entre municipalidades y particulares, pero no abordan específicamente la excepción de caducidad en procesos civiles.
+
+Por lo tanto, se puede concluir que los documentos no guardan relación directa con la pregunta del usuario.
+
+1. Declaración clara: No se encontró jurisprudencia en el corpus analizado que resuelva directamente la excepción de caducidad en procesos civiles.
+2. Documentos recuperados:
+ * [CAS. N° 01-2000-LIMA | Corte Suprema - Sala Civil] -- FALLO: La Corte Suprema declaró fundado el recurso de casación y revocó la resolución que declaró fundada la excepción de prescripción extintiva, confirmándose la resolución apelada que declaró improcedente la excepción de prescripción extintiva.
+ * [CAS. N° 01-2000-LIMA | Corte Suprema - Sala Civil] -- FALLO: La Corte Suprema declaró fundado el recurso de casación y revocó la resolución que declaró fundada la excepción de prescripción extintiva, confirmándose la resolución apelada que declaró improcedente la excepción de prescripción extintiva.
+ * [CAS. N° 7261-2015 JUNIN | Corte Suprema - Sala Constitucional] -- FALLO: La Sala de Derecho Constitucional y Social Permanente de la Corte Suprema declaró fundado el recurso de casación interpuesto por la Municipalidad Provincial de Huancayo y, en consecuencia, casó la sentencia de vista y confirmó la sentencia apelada que declaró infundada la demanda del actor.
+3. Explicación: Los documentos recuperados tratan sobre procesos de nulidad de contratos de compraventa y disputas entre municipalidades y particulares, pero no abordan específicamente la excepción de caducidad en procesos civiles. Por lo tanto, no se puede establecer una conexión directa entre los documentos y la pregunta del usuario.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P11: COMPLEJA - Reposicion servicio especifico
+  Consulta completa: cuales son los requisitos para que proceda la reposicion de un trabajador contratado por servicio especifico cuando la empresa extingue el vinculo antes de concluir la obra contratada
+  Tiempo: 22s | Exit: 0
+  Escenario: B (negativo)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 609
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+**ANÁLISIS DE LA PREGUNTA Y DOCUMENTOS RECUPERADOS**
+
+La pregunta del usuario se refiere a los requisitos para que proceda la reposición de un trabajador contratado por servicio específico cuando la empresa extingue el vínculo antes de concluir la obra contratada. Los documentos recuperados tratan sobre demandas de amparo y procesos de casación relacionados con la desnaturalización de contratos de trabajo y la terminación de los mismos.
+
+**DETERMINACIÓN DE LA RELACIÓN DIRECTA**
+
+Después de analizar los documentos recuperados, se determina que sí guardan relación directa con la pregunta del usuario, ya que abordan temas como la desnaturalización de contratos de trabajo, la terminación de contratos y la reposición de trabajadores.
+
+**SÍNTESIS RESOLUTIVA**
+
+La reposición de un trabajador contratado por servicio específico puede proceder si se demuestra que la empresa extinguió el vínculo de manera arbitraria y sin respetar los términos contractuales. Es importante que el trabajador pruebe que el contrato se desnaturalizó y que la empresa utilizó contratos de trabajo sujetos a modalidad para evadir la contratación por tiempo indeterminado.
+
+**ANÁLISIS DE EVIDENCIAS TEXTUALES**
+
+[EXP. N° 1397-2001 | Tribunal Constitucional] -- FALLO: "El Tribunal Constitucional declara fundada la demanda y ordena la reincorporación de los trabajadores a sus puestos de trabajo, considerando que la terminación de sus contratos fue arbitraria y que la empresa utilizó contratos de trabajo sujetos a modalidad para evadir la contratación por tiempo indeterminado." Este fallo sugiere que la desnaturalización de contratos de trabajo y la terminación arbitraria pueden dar lugar a la reposición de los trabajadores.
+
+[PROCESO DE AMPARO | Tribunal Constitucional] -- FALLO: "El Tribunal Constitucional declaró infundada la demanda, al considerar que no se acreditó la desnaturalización de los contratos de trabajo sujetos a modalidad y que, por lo tanto, no existió una relación laboral a plazo indeterminado." Este fallo destaca la importancia de probar la desnaturalización de los contratos de trabajo para que proceda la reposición de los trabajadores.
+
+[CAS. N° 12044-2015-LAMBAYEQUE | Corte Suprema] -- FALLO: "El tribunal declaró infundado el recurso de casación interpuesto por el Procurador Público a cargo de los asuntos judiciales del Poder Judicial, y confirmó la sentencia de vista que había amparado la pretensión de desnaturalización de los contratos de trabajo sujetos a modalidad y la reposición del actor en su puesto habitual de trabajo." Este fallo confirma que la desnaturalización de contratos de trabajo y la reposición de los trabajadores pueden ser objeto de casación y confirmación por parte de la Corte Suprema.
+
+**ANÁLISIS DE CONEXIONES DEL GRAFO**
+
+El juez Rey Terry, que resolvió el documento [EXP. N° 1397-2001 | Tribunal Constitucional], también aparece en otros documentos relacionados con la desnaturalización de contratos de trabajo y la terminación de los mismos. Esto sugiere que el juez tiene experiencia en la materia y que sus fallos pueden ser relevantes para la resolución de casos similares.
+
+La Constitución Política del Perú, invocada en [PROCESO DE AMPARO | Tribunal Constitucional], también se menciona en otros documentos, lo que destaca la importancia de esta ley en la resolución de casos relacionados con la desnaturalización de contratos de trabajo y la terminación de los mismos.
+
+**CONCLUSIÓN JURISPRUDENCIAL**
+
+En resumen, la reposición de un trabajador contratado por servicio específico puede proceder si se demuestra que la empresa extinguió el vínculo de manera arbitraria y sin respetar los términos contractuales. Es importante que el trabajador pruebe que el contrato se desnaturalizó y que la empresa utilizó contratos de trabajo sujetos a modalidad para evadir la contratación por tiempo indeterminado. La Constitución Política del Perú y la jurisprudencia de la Corte Suprema y el Tribunal Constitucional pueden ser invocadas para respaldar la reposición de los trabajadores en estos casos.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P12: COMPLEJA - TC + reposicion
+  Consulta completa: que criterios ha establecido el tribunal constitucional sobre el derecho al trabajo y la reposicion en casos de contratos modales desnaturalizados
+  Tiempo: 17s | Exit: 0
+  Escenario: B (negativo)
+  Score: 65/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 384
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+Después de analizar el contexto proporcionado, podemos concluir que los documentos recuperados no guardan relación directa con la pregunta sobre el derecho al trabajo y la reposición en casos de contratos modales desnaturalizados. A continuación, se presenta la respuesta en formato reducido:
+
+1. **Declaración clara**: No se encontró jurisprudencia en el corpus analizado que resuelva directamente el tema de los criterios establecidos por el Tribunal Constitucional sobre el derecho al trabajo y la reposición en casos de contratos modales desnaturalizados.
+2. **Documentos recuperados**: Los documentos encontrados tratan sobre distintos temas, como la Acción Popular contra decretos supremos, la demanda de amparo de una empresa contra el Consejo Superior de Contrataciones y Adquisiciones del Estado, y la competencia del Tribunal del Servicio Civil en materia disciplinaria y de terminación de la relación de trabajo.
+   * [PROCESO DE ACCIÓN POPULAR | Tribunal Constitucional] -- FALLO: "La Sala de Derecho Constitucional y Social Permanente de la Corte Suprema declaró nula la sentencia de la Sala Superior y ordenó que se emita un nuevo pronunciamiento, atendiendo a los defectos de motivación encontrados en la sentencia original."
+   * [EXP. N° 01834-2008 | Tribunal Constitucional] -- FALLO: "El Tribunal Constitucional declara improcedente la demanda de amparo presentada por la empresa Algisa Representaciones S.A.C., argumentando que existen vías procedimentales específicas e igualmente satisfactorias para la protección de los derechos constitucionales afectados y que la empresa, como persona jurídica, no tiene legitimidad para presentar una demanda de amparo que es un proceso constitucional destinado exclusivamente a la defensa de los derechos fundamentales de la persona humana."
+   * [ASUNTO: | 10 de agosto de 2010] -- FALLO: "El Tribunal del Servicio Civil se declara competente para admitir y resolver apelaciones sobre materias disciplinarias y de terminación de la relación de trabajo en el régimen laboral de la actividad privada cuando el empleador es una entidad estatal bajo el ámbito del Sistema Administrativo de Gestión de Recursos Humanos."
+3. **Explicación**: Los documentos recuperados tratan sobre temas como la Acción Popular, el amparo y la competencia del Tribunal del Servicio Civil, pero no abordan específicamente el tema de los contratos modales desnaturalizados y su relación con el derecho al trabajo y la reposición. Por lo tanto, no se puede establecer una conexión directa entre los documentos recuperados y la pregunta planteada.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P13: COMPLEJA - Comparacion nulidades
+  Consulta completa: diferencia entre la nulidad de cosa juzgada fraudulenta y la nulidad de oficio segun la jurisprudencia de la corte suprema
+  Tiempo: 17s | Exit: 0
+  Escenario: B (negativo)
+  Score: 85/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 238
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+No se encontró jurisprudencia en el corpus analizado que resuelva directamente la pregunta sobre la diferencia entre la nulidad de cosa juzgada fraudulenta y la nulidad de oficio según la jurisprudencia de la Corte Suprema.
+
+Los documentos recuperados son los siguientes:
+- [CAS. N° 3108-2014 LIMA | Corte Suprema - Sala Civil] -- FALLO: "La Sala Suprema Civil Transitoria declaró fundados los recursos de casación y nula la sentencia de vista, ordenando que se emita una nueva resolución que tenga en cuenta los alcances establecidos en la presente resolución."
+- [SALA PENAL R.N. Nº | Corte Suprema] -- FALLO: "La decisión final del tribunal declara nula la sentencia en parte, absuelve a algunos acusados y ordena un nuevo juicio oral para otros, debido a irregularidades y omisiones en el proceso."
+- [Muro Rojo, Manuel | Corte Superior] -- FALLO: "La Corte Superior declara nula la sentencia de primera instancia y ordena la expedición de un nuevo fallo, considerando que el juez sustituto no se avocó previamente al conocimiento del proceso."
+
+Estos documentos tratan sobre nulidades en diferentes contextos y según la problemática presentada en cada caso, pero no abordan específicamente la diferencia entre la nulidad de cosa juzgada fraudulenta y la nulidad de oficio según la jurisprudencia de la Corte Suprema. Por lo tanto, no hay evidencias textuales ni conexiones en el grafo que permitan realizar un análisis detallado sobre el tema en cuestión.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P14: COMPLEJA - Casacion laboral
+  Consulta completa: procedencia del recurso de casacion por infraccion normativa en procesos laborales sobre pago de beneficios sociales
+  Tiempo: 23s | Exit: 0
+  Escenario: A (relevante)
+  Score: 85/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 476
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+**Sintesis resolutiva**
+
+La procedencia del recurso de casación por infracción normativa en procesos laborales sobre pago de beneficios sociales es un tema que se encuentra presente en los documentos recuperados. En este sentido, se puede observar que los fallos principales de los documentos analizados declaran fundados los recursos de casación interpuestos, lo que sugiere que la infracción normativa es un motivo válido para interponer este tipo de recurso.
+
+**Análisis de evidencias textuales**
+
+[CAS. N° 4174-2015-LIMA | Corte Suprema] -- FALLO: "El tribunal declaró fundado el recurso de casación interpuesto por la Contraloría General de la República y casó la sentencia de vista, revocando la sentencia apelada que declaró fundada en parte la demanda sobre pago de remuneraciones devengadas y beneficios sociales". Este fallo sugiere que la infracción normativa puede ser un motivo para interponer un recurso de casación.
+
+[CAS. N° 14856-2016-LIMA | Corte Suprema] -- FALLO: "El fallo declara fundado el recurso de casación interpuesto por la demandada, anula la sentencia de vista y ordena que el juez de primera instancia emita un nuevo pronunciamiento". En este caso, el recurso de casación fue interpuesto por la demandada, lo que sugiere que la infracción normativa puede ser un motivo válido para impugnar una sentencia.
+
+[CAS. N° 7893-2013 LA LIBERTAD | Corte Suprema - Sala Constitucional] -- FALLO: "El tribunal declara fundado el recurso de casación y nula la sentencia de vista, ordenando que la Sala Superior emita una nueva resolución conforme a los lineamientos expuestos en la sentencia". Este fallo tambien sugiere que la infracción normativa es un motivo válido para interponer un recurso de casación.
+
+**Análisis de conexiones del grafo**
+
+Se puede observar que el juez Yrivarren Fallaque aparece en varios documentos, incluyendo [CAS. N° 4174-2015-LIMA | Corte Suprema] y [CAS. N° 14856-2016-LIMA | Corte Suprema]. Esto sugiere que este juez tiene experiencia en casos relacionados con el pago de beneficios sociales y la procedencia del recurso de casación por infracción normativa.
+
+Además, se puede ver que la Ley Nº 28411 y la Ley General Del Sistema Nacional De Presupuesto son citadas en [CAS. N° 4174-2015-LIMA | Corte Suprema], lo que sugiere que estas leyes son relevantes para la procedencia del recurso de casación por infracción normativa en procesos laborales.
+
+**Conclusión jurisprudencial**
+
+En conclusión, los fallos principales de los documentos analizados sugieren que la infracción normativa es un motivo válido para interponer un recurso de casación en procesos laborales sobre pago de beneficios sociales. Los jueces y las leyes citadas en los documentos analizados sugieren que la procedencia del recurso de casación por infracción normativa es un tema importante en la jurisprudencia laboral. Por lo tanto, se puede concluir que el recurso de casación por infracción normativa es un mecanismo válido para impugnar sentencias que se consideren injustas o que incurran en errores normativos en procesos laborales sobre pago de beneficios sociales.
+============================================================
+
+
+------------------------------------------------------------------------
+PREGUNTA P15: COMPLEJA - Tendencia TF
+  Consulta completa: cual es la tendencia jurisprudencial del tribunal fiscal respecto a la aplicacion del principio de capacidad contributiva en el impuesto a la renta de tercera categoria
+  Tiempo: 21s | Exit: 0
+  Escenario: A (relevante)
+  Score: 85/100 | Status: PASS
+
+  [METRICAS]
+    Cita fallo: SI
+    Labels legibles: SI
+    Documentos citados: 0
+    Palabras totales: 432
+
+  [RESPUESTA COMPLETA]:
+[RESPUESTA GRAPHRAG]
+============================================================
+**Sintesis resolutiva**
+
+La tendencia jurisprudencial del Tribunal Fiscal respecto a la aplicación del principio de capacidad contributiva en el impuesto a la renta de tercera categoría no se encuentra explícitamente definida en los documentos proporcionados. Sin embargo, se puede analizar la aplicación de este principio en los casos relacionados con la determinación de la naturaleza de los ingresos y su impacto en la liquidación del impuesto a la renta.
+
+**Análisis de evidencias textuales**
+
+En el caso [RTF N° 828-1-2000 | Tribunal Fiscal | 17 de octubre de 2000] -- FALLO: "El tribunal confirma la resolución de la Administración Tributaria, determinando que los ingresos de la contribuyente son de tercera categoría. Sin embargo, ordena a la Administración verificar el acogimiento al Régimen de Fraccionamiento Especial para liquidar la deuda tributaria correspondiente", se puede observar que el Tribunal Fiscal se enfoca en la determinación de la naturaleza de los ingresos, pero no se hace una mención explícita al principio de capacidad contributiva.
+
+En el caso [EXP. N° 1907-2003 | Tribunal Constitucional] -- FALLO: "El Tribunal Constitucional declaró infundada la demanda, considerando que el IEAN no vulnera el principio de no confiscatoriedad, el derecho a la propiedad ni la capacidad contributiva, y que su aplicación es compatible con la Constitución Política del Perú", se menciona el principio de capacidad contributiva en el contexto de la constitucionalidad del Impuesto Extraordinario a los Activos Netos (IEAN), pero no se relaciona directamente con la aplicación en el impuesto a la renta de tercera categoría.
+
+**Análisis de conexiones del grafo**
+
+Se observa que los jueces que han resuelto los casos mencionados, como Cogorno Prestinoni y Casalino Mannarelli en [RTF N° 828-1-2000 | Tribunal Fiscal | 17 de octubre de 2000], también han participado en otros casos relacionados con la determinación de la naturaleza de los ingresos y la aplicación de impuestos. Sin embargo, no se encuentra una conexión directa que permita establecer una tendencia jurisprudencial clara respecto al principio de capacidad contributiva en el impuesto a la renta de tercera categoría.
+
+**Conclusión jurisprudencial**
+
+En conclusión, aunque no se encuentra una tendencia jurisprudencial clara y directa respecto a la aplicación del principio de capacidad contributiva en el impuesto a la renta de tercera categoría, se puede inferir que el Tribunal Fiscal se enfoca en la determinación de la naturaleza de los ingresos y su impacto en la liquidación del impuesto a la renta. Es importante tener en cuenta que la aplicación del principio de capacidad contributiva puede variar dependiendo de las circunstancias específicas de cada caso y la interpretación que hagan los jueces y tribunales competentes.
+============================================================
+
+
+========================================================================
+RESUMEN GLOBAL
+========================================================================
+Tiempo total: 320s (21s promedio por consulta)
+Score promedio: 70/100
+
+DISTRIBUCION:
+  Escenario A (relevante): 6
+  Escenario B (negativo): 9
+  Indeterminado: 0
+  Total: 15
+
+RESULTADOS:
+  PASS: 13
+  WARN: 2
+  FAIL: 0
+
+DETALLE POR PREGUNTA:
+
+  P1   | SIMPLE - Desnaturalizacion contratos          | B (negativo)  |  65/100 | PASS
+  P2   | SIMPLE - Indemnizacion despido                | B (negativo)  |  65/100 | PASS
+  P3   | SIMPLE - Violencia familiar                   | A (relevante) |  85/100 | PASS
+  P4   | SIMPLE - Nulidad cosa juzgada                 | B (negativo)  |  45/100 | WARN
+  P5   | SIMPLE - Gastos viaje I.R.                    | A (relevante) |  65/100 | PASS
+  P6   | MEDIA - Reposicion + desnaturalizacion        | A (relevante) |  85/100 | PASS
+  P7   | MEDIA - Maltrato psicologico                  | A (relevante) |  65/100 | PASS
+  P8   | MEDIA - Horas extras + comisiones             | B (negativo)  |  85/100 | PASS
+  P9   | MEDIA - No confiscatoriedad                   | B (negativo)  |  45/100 | WARN
+  P10  | MEDIA - Excepcion caducidad                   | B (negativo)  |  65/100 | PASS
+  P11  | COMPLEJA - Reposicion servicio especifico     | B (negativo)  |  65/100 | PASS
+  P12  | COMPLEJA - TC + reposicion                    | B (negativo)  |  65/100 | PASS
+  P13  | COMPLEJA - Comparacion nulidades              | B (negativo)  |  85/100 | PASS
+  P14  | COMPLEJA - Casacion laboral                   | A (relevante) |  85/100 | PASS
+  P15  | COMPLEJA - Tendencia TF                       | A (relevante) |  85/100 | PASS
+
+========================================================================
+FIN DEL REPORTE
+========================================================================

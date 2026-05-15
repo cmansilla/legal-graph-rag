@@ -1,0 +1,35 @@
+# Python
+venv/
+venv_linux/
+__pycache__/
+*.pyc
+
+# Data (too large for repo)
+Jurisprudencia/
+data/indices/
+data_raw/
+
+# Reports (auto-generated, not committed)
+consultas_guardadas/
+resultados_benchmark/
+logs/
+backups/
+
+# Config with secrets
+.env
+.env.bak
+
+# Node
+node_modules/
+frontend/
+
+# Archives
+_archive/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

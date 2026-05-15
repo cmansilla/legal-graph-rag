@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KGraph Resoluciones V3</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f5f0;
+    color: #2c2c2c;
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 {
+    font-size: 1.8em;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3em;
+    color: #1a1a1a;
+  }
+  .sub {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 2.5em;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1.5em;
+  }
+  h2 {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+    color: #333;
+  }
+  p { margin-bottom: 1em; color: #444; }
+  code {
+    background: #eaeae5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.5;
+    margin: 1em 0;
+  }
+  .tag {
+    display: inline-block;
+    background: #e8e8e3;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    color: #555;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  a { color: #2b6cb0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+  .footer { font-size: 0.85em; color: #888; margin-top: 3em; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>KGraph Resoluciones V3</h1>
+<div class="sub">Motor de consultas jurisprudenciales basado en GraphRAG</div>
+
+<p>
+  Sistema de Generación Aumentada por Recuperación (RAG) especializado en
+  resoluciones del Tribunal Fiscal, Corte Suprema y Tribunal Constitucional
+  del Perú. Combina búsqueda semántica vectorial (FAISS), topología de grafos
+  (NetworkX) y un modelo de lenguaje (Groq) para producir respuestas
+  estructuradas con citas textuales.
+</p>
+
+<h2>Arquitectura</h2>
+<p>
+  Una consulta en lenguaje natural se convierte en un vector mediante
+  <em>Sentence Transformers</em>, se recuperan los documentos más similares
+  vía <em>FAISS</em>, se expande el contexto con relaciones del grafo
+  <em>NetworkX</em> (jueces, leyes, partes procesales), y se envía todo a
+  un LLM que estructura la respuesta en dos escenarios posibles:
+  datos relevantes (análisis en 4 partes) o datos insuficientes
+  (respuesta concisa con los fallos encontrados).
+</p>
+
+<h2>Componentes</h2>
+<p>
+  <span class="tag">FAISS (4500 vectores)</span>
+  <span class="tag">NetworkX (21 732 nodos)</span>
+  <span class="tag">Sentence Transformers</span>
+  <span class="tag">Groq llama-3.3-70b</span>
+  <span class="tag">Python CLI</span>
+  <span class="tag">Streaming</span>
+</p>
+
+<h2>Uso</h2>
+<pre>
+python graphrag_console.py --query "despido arbitrario reposicion"
+python graphrag_console.py --query "violencia familiar" --stream</pre>
+
+<h2>Documentación</h2>
+<p>
+  La arquitectura completa del sistema se describe en
+  <a href="docs/ARQUITECTURA.md">ARQUITECTURA.md</a>.
+  El repositorio incluye un conjunto de 15 preguntas de prueba
+  y una suite automatizada de evaluación.
+</p>
+
+<hr>
+
+<div class="footer">
+  Repositorio de investigación jurídica &mdash; consultas locales sin dependencia externa de red.
+</div>
+
+</div>
+</body>
+</html>

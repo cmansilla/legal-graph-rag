@@ -1,0 +1,95 @@
+================================================================================
+15 PREGUNTAS JURIDICAS - SUITE DE PRUEBAS LEX RAG
+================================================================================
+Fecha: 2026-05-14
+Sistema: GraphRAG (FAISS 4500 vectores + NetworkX 21732 nodos)
+Prompt: v2 (Escenario A/B condicional + Fallo obligatorio + Metadata legible)
+
+Las preguntas estan ordenadas por complejidad creciente,
+simulando consultas reales de un abogado peruano.
+
+================================================================================
+NIVEL 1: SIMPLES (1 concepto, 3-6 palabras)
+================================================================================
+
+P01: "desnaturalizacion de contratos de trabajo"
+Desc: Consulta simple sobre un concepto laboral especifico
+Materia: Laboral
+
+P02: "indemnizacion por despido arbitrario"
+Desc: Consulta directa sobre un derecho laboral basico
+Materia: Laboral
+
+P03: "medidas de proteccion en violencia familiar"
+Desc: Consulta sobre materia familiar y proteccion
+Materia: Familia
+
+P04: "nulidad de cosa juzgada fraudulenta"
+Desc: Figura procesal civil especifica
+Materia: Civil-Procesal
+
+P05: "gastos de viaje deducibles en el impuesto a la renta"
+Desc: Consulta tributaria concreta
+Materia: Tributario
+
+================================================================================
+NIVEL 2: MEDIANAS (2 conceptos, 6-12 palabras)
+================================================================================
+
+P06: "reposicion del trabajador por desnaturalizacion de contrato modal"
+Desc: Dos conceptos laborales combinados (reposicion + desnaturalizacion)
+Materia: Laboral
+
+P07: "maltrato psicologico como modalidad de violencia familiar"
+Desc: Modalidad especifica de violencia familiar
+Materia: Familia
+
+P08: "procedencia del pago de horas extras y comisiones"
+Desc: Dos derechos laborales en una consulta comparativa
+Materia: Laboral
+
+P09: "aplicacion del principio de no confiscatoriedad en tributos"
+Desc: Principio constitucional aplicado al derecho tributario
+Materia: Constitucional-Tributario
+
+P10: "excepcion de caducidad en procesos civiles"
+Desc: Figura procesal civil con terminologia tecnica
+Materia: Civil-Procesal
+
+================================================================================
+NIVEL 3: COMPLEJAS (Multiples aristas, 15+ palabras, lenguaje tecnico)
+================================================================================
+
+P11: "cuales son los requisitos para que proceda la reposicion de un trabajador
+contratado por servicio especifico cuando la empresa extingue el vinculo antes
+de concluir la obra contratada"
+Desc: Consulta laboral extensa con varios elementos: tipo de contrato,
+extincion anticipada, requisitos de reposicion
+Materia: Laboral
+
+P12: "que criterios ha establecido el tribunal constitucional sobre el derecho
+al trabajo y la reposicion en casos de contratos modales desnaturalizados"
+Desc: Consulta que cruza dos niveles (TC + Corte Suprema) sobre reposicion
+Materia: Constitucional-Laboral
+
+P13: "diferencia entre la nulidad de cosa juzgada fraudulenta y la nulidad de
+oficio segun la jurisprudencia de la corte suprema"
+Desc: Comparacion entre dos figuras procesales citando organo especifico
+Materia: Civil-Procesal
+
+P14: "procedencia del recurso de casacion por infraccion normativa en procesos
+laborales sobre pago de beneficios sociales"
+Desc: Consulta procesal con terminologia tecnica densa (infraccion normativa,
+recurso de casacion, beneficios sociales)
+Materia: Laboral-Procesal
+
+P15: "cual es la tendencia jurisprudencial del tribunal fiscal respecto a la
+aplicacion del principio de capacidad contributiva en el impuesto a la renta
+de tercera categoria"
+Desc: Consulta abierta de tendencia, combinando dos conceptos tributarios
+complejos con un organo especifico
+Materia: Tributario
+
+================================================================================
+FIN DEL ARCHIVO DE PREGUNTAS
+================================================================================
