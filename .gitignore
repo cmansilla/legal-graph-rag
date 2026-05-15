@@ -4,12 +4,16 @@ venv_linux/
 __pycache__/
 *.pyc
 
-# Data (too large for repo)
+# Source HTML files (too large, GBs)
 Jurisprudencia/
-data/indices/
+
+# Raw ingestion data
 data_raw/
 
-# Reports (auto-generated, not committed)
+# Large pro indices (not used by runtime engine)
+data/indices/*_pro.*
+
+# Reports (auto-generated)
 consultas_guardadas/
 resultados_benchmark/
 logs/
