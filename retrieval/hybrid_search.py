@@ -1,10 +1,31 @@
 import re
+import os
+import json
 import faiss
 import pickle
 import numpy as np
 from rank_bm25 import BM25Okapi
-from core.config import FAISS_INDEX_PATH, FAISS_META_PATH, BM25_PATH
+from core.config import FAISS_INDEX_PATH, FAISS_META_PATH, BM25_PATH, METADATA_DOCS_PATH
 from core.embedding import embedding_model
+
+# Cache de metadatos legibles (RTF N°, CAS. N°, EXP. N°)
+_docs_metadata = {}
+def _load_docs_metadata():
+    global _docs_metadata
+    if not _docs_metadata and METADATA_DOCS_PATH and os.path.exists(METADATA_DOCS_PATH):
+        try:
+            with open(METADATA_DOCS_PATH, 'r', encoding='utf-8') as f:
+                _docs_metadata = json.load(f)
+        except Exception:
+            _docs_metadata = {}
+
+def _doc_label(doc_id):
+    """Retorna el identificador legible (CAS. N° XXXX, RTF N° XXXX, etc.)"""
+    _load_docs_metadata()
+    meta = _docs_metadata.get(doc_id, {})
+    if isinstance(meta, dict):
+        return meta.get("identificador", "") or doc_id
+    return doc_id
 
 def get_hybrid_context(hyde_query, top_k=7):
     # FAISS
@@ -46,6 +67,7 @@ def get_hybrid_context(hyde_query, top_k=7):
     for i in top_chunks_indices:
         m = meta_data[i]
         if m['doc_id'] in final_top_docs:
-            texts.append(f"[Doc: {m['doc_id']}]\n{m['text']}")
+            label = _doc_label(m['doc_id'])
+            texts.append(f"**{label}** → Jurisprudencia/{m['doc_id']}\n{m['text']}")
         
     return final_top_docs, "\n\n".join(texts)

@@ -14,6 +14,8 @@ FAISS_INDEX_PATH = "data/indices/faiss_index_pro.bin"
 FAISS_META_PATH = "data/indices/faiss_meta_pro.pkl"
 GRAPH_PATH = "data/indices/graph_juris_pro.pkl"
 BM25_PATH = "data/indices/bm25_index_pro.pkl"
+METADATA_DOCS_PATH = "data/metadata_docs.json"
+JURISPRUDENCIA_DIR = "Jurisprudencia"
 
 MAX_TOKENS_CONTEXT = 30000 
 CHUNK_SIZE = 512

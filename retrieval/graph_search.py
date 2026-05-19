@@ -1,5 +1,5 @@
 import pickle
-from core.config import GRAPH_PATH, logger
+from core.config import GRAPH_PATH, JURISPRUDENCIA_DIR, logger
 
 def get_graph_context(doc_ids):
     try:
@@ -14,7 +14,7 @@ def get_graph_context(doc_ids):
 
     for n in doc_ids:
         if n in G:
-            contexto_grafo += f"\n--- [Doc ID: {n}] ---\n"
+            contexto_grafo += f"\n--- [{n}] ({JURISPRUDENCIA_DIR}/{n}) ---\n"
             contexto_grafo += f"FALLO: {G.nodes[n].get('fallo', '')}\n"
             contexto_grafo += "VÍNCULOS JURISPRUDENCIALES DIRECTOS:\n"
             for adj in G.neighbors(n):
