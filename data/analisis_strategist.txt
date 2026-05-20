@@ -1,0 +1,114 @@
+================================================================================
+ANÁLISIS: RETRIEVAL STRATEGIST — PRECISIÓN, COSTO E IMPACTO
+================================================================================
+
+Baseline: 20 consultas · 20 LLM calls
+Precisión actual: 35% (7/20)
+
+── PRECISIÓN POR NIVEL ──
+  simple       5/5 (100%) ████████████████████
+  media        0/5 (0%) ░░░░░░░░░░░░░░░░░░░░
+  compleja     2/6 (33%) ██████░░░░░░░░░░░░░░
+  estadistica  0/4 (0%) ░░░░░░░░░░░░░░░░░░░░
+
+── MATRIZ DE CONFUSIÓN ──
+                   Simple    Media   Compleja   Estadist
+  simple                5        0        0        0
+  media                 5        0        0        0
+  compleja              2        2        2        0
+  estadistica           2        2        0        0
+
+── ERRORES TÍPICOS ──
+  ❌ Esperado=media        Got=simple       k=4 g=N m=lexical_only   "reposicion por desnaturalizacion de contrato modal"
+  ❌ Esperado=media        Got=simple       k=4 g=N m=hybrid         "procedencia del pago de horas extras y comisiones"
+  ❌ Esperado=media        Got=simple       k=4 g=N m=lexical_only   "aplicacion del principio de no confiscatoriedad en tributos"
+  ❌ Esperado=media        Got=simple       k=4 g=N m=lexical_only   "excepcion de caducidad en procesos civiles"
+  ❌ Esperado=media        Got=simple       k=4 g=N m=lexical_only   "prescripcion de la accion penal en delitos"
+  ❌ Esperado=compleja     Got=media        k=6 g=S1 m=hybrid         "cuales son los requisitos para que proceda la reposicion de "
+  ❌ Esperado=compleja     Got=simple       k=4 g=N m=hybrid         "procedencia del recurso de casacion por infraccion normativa"
+  ❌ Esperado=compleja     Got=media        k=6 g=S1 m=hybrid         "cual es la tendencia jurisprudencial del tribunal fiscal res"
+  ❌ Esperado=estadistica  Got=media        k=6 g=S1 m=hybrid         "que juez de la corte suprema ha emitido mas sentencias sobre"
+  ❌ Esperado=estadistica  Got=simple       k=4 g=N m=hybrid         "cuales son las leyes mas citadas en los procesos laborales s"
+  ❌ Esperado=estadistica  Got=simple       k=4 g=N m=hybrid         "que entidad del estado es la mas demandada en procesos de ha"
+  ❌ Esperado=estadistica  Got=media        k=6 g=S1 m=hybrid         "cual es el tribunal con mas carga procesal segun la jurispru"
+  ❌ Esperado=compleja     Got=simple       k=4 g=N m=hybrid         "un trabajador fue despedido verbalmente sin carta de preavis"
+
+================================================================================
+IMPACTO DE CADA OPCIÓN
+================================================================================
+
+── A: Prompt Engineering ──
+  Descripción:    Añadir conteo de palabras, keywords disparadores (juez/mas/citadas/estadistica), ejemplos few-shot
+  Esfuerzo:       1 hora
+  Costo LLM:      Sin cambio
+  Tokens extra:   +200 por consulta
+  Precisión est.:  65-75%
+  Ventaja:        Gratuito, inmediato
+  Desventaja:     Sigue dependiendo del comportamiento del LLM 8B
+
+── B: Reglas híbridas (LLM + heurísticas) ──
+  Descripción:    Reglas duras ANTES del LLM: si <7 palabras → simple, si >15 → compleja, si keywords estadísticas → estadistica. LLM solo para casos ambiguos (7-15 palabras)
+  Esfuerzo:       2-3 horas
+  Costo LLM:      -40% calls (solo casos ambiguos)
+  Tokens extra:   Menos (menos llamadas)
+  Precisión est.:  85-95%
+  Ventaja:        Alta precisión, menos LLM calls
+  Desventaja:     Requiere mantener dos lógicas
+
+── C: Modelo más grande ──
+  Descripción:    Usar llama-3.3-70b o mixtral-8x7b para la clasificación
+  Esfuerzo:       5 minutos (cambiar modelo)
+  Costo LLM:      10-20x más caro (~$0.002 vs ~$0.00015/query)
+  Tokens extra:   Sin cambio
+  Precisión est.:  80-90%
+  Ventaja:        Simple de implementar
+  Desventaja:     Caro si hay muchas consultas. Latencia mayor.
+
+── D: Few-shot + reglas combinado ──
+  Descripción:    Prompt con 4 ejemplos concretos + reglas de override para casos claros. El mejor de A y B.
+  Esfuerzo:       2 horas
+  Costo LLM:      Sin cambio (+300 tokens/query por ejemplos)
+  Tokens extra:   +300 por consulta
+  Precisión est.:  80-90%
+  Ventaja:        Buen balance precisión/costo
+  Desventaja:     Prompt más largo, puede confundir al LLM si los ejemplos no son representativos
+
+── E: Solo heurísticas (sin LLM) ──
+  Descripción:    Eliminar la llamada LLM, usar solo _analyze_heuristic() que ya existe
+  Esfuerzo:       N/A (ya existe)
+  Costo LLM:      0 (sin llamada)
+  Tokens extra:   0
+  Precisión est.:  75-85%
+  Ventaja:        Costo cero, latencia cero
+  Desventaja:     No se beneficia de comprensión semántica del LLM. Puede fallar en queries ambiguas.
+
+================================================================================
+PONDERACIÓN (1-5, 5=mejor)
+================================================================================
+
+Opción                          Prec  Cost   Esf   Lat  Mant   Total
+-----------------------------------------------------------------
+A: Prompt Engineering              3     5     5     5     4   4.15
+B: Reglas híbridas                 5     5     3     5     3   4.40
+C: Modelo más grande               4     2     5     3     5   3.75
+D: Few-shot + reglas               4     4     4     5     4   4.15
+E: Solo heurísticas                3     5     5     5     5   4.30
+
+── RECOMENDACIÓN ──
+  🥇 B: Reglas híbridas             4.40
+  🥈 E: Solo heurísticas            4.30
+  🥉 D: Few-shot + reglas           4.15
+  4 A: Prompt Engineering          4.15
+  5 C: Modelo más grande           3.75
+
+→ Mejor opción: B: Reglas híbridas (4.40)
+
+RECOMENDACIÓN: Implementar primero Prompt Engineering (Opción A, 1h),
+luego si no es suficiente, añadir Reglas Híbridas (Opción B, 2h más).
+El costo extra de A es cero y ya mejora la precisión de 38% a ~70%.
+Si la precisión sigue siendo crítica, sumar B lleva a ~90%.
+
+================================================================================
+Generado: 2026-05-19 21:30:37
+Total consultas analizadas: 20
+Precisión baseline: 35%

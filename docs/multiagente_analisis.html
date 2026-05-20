@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Lex RAG Multi-Agent — Análisis Arquitectónico</title>
+<style>
+  body { background: #020617; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 40px; }
+  h1 { color: #22d3ee; font-size: 28px; margin-bottom: 4px; }
+  h2 { color: #34d399; font-size: 20px; margin-top: 40px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+  h3 { color: #a78bfa; font-size: 16px; margin-top: 24px; }
+  .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }
+  .card { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; margin: 16px 0; }
+  .card.cyan { border-left: 3px solid #22d3ee; }
+  .card.emerald { border-left: 3px solid #34d399; }
+  .card.violet { border-left: 3px solid #a78bfa; }
+  .card.amber { border-left: 3px solid #fbbf24; }
+  .card.rose { border-left: 3px solid #fb7185; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: #1e293b; color: #22d3ee; padding: 10px 12px; text-align: left; font-weight: 600; }
+  td { padding: 10px 12px; border-bottom: 1px solid #1e293b; }
+  tr:hover { background: #1a2332; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 4px; }
+  .tag.cyan { background: rgba(34, 211, 238, 0.15); color: #22d3ee; }
+  .tag.green { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+  .tag.violet { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+  .tag.amber { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+  .tag.rose { background: rgba(251, 113, 133, 0.15); color: #fb7185; }
+  .tag.gray { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
+  .cost { font-size: 13px; }
+  .cost span { display: inline-block; min-width: 40px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; font-size: 14px; }
+  strong { color: #f1f5f9; }
+  .metric { font-size: 24px; font-weight: 700; }
+  .metric.cyan { color: #22d3ee; }
+  .metric.emerald { color: #34d399; }
+  .metric.amber { color: #fbbf24; }
+  .metric.rose { color: #fb7185; }
+  .metric-label { font-size: 11px; color: #64748b; margin-top: -4px; }
+</style>
+</head>
+<body>
+
+<h1>⚖️ Lex RAG → Multi-Agente</h1>
+<div class="subtitle">Análisis arquitectónico: costos, impacto en calidad y plan de implementación</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- DIAGRAMA SVG                                -->
+<!-- ════════════════════════════════════════════ -->
+
+<svg viewBox="0 0 1100 820" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:1100px;background:#020617;border-radius:12px;border:1px solid #1e293b;margin:20px 0;">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa"/>
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <!-- Grid background -->
+  <rect width="1100" height="820" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="550" y="30" text-anchor="middle" fill="#22d3ee" font-size="16" font-weight="bold" font-family="monospace">═══ ARQUITECTURA MULTI-AGENTE ═══</text>
+  <text x="550" y="46" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="monospace">Cada agente tiene rol, herramientas y ciclo decisorio propios</text>
+
+  <!-- ═══ USUARIO ═══ -->
+  <rect x="440" y="64" width="220" height="44" rx="22" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="550" y="90" text-anchor="middle" fill="#22d3ee" font-size="13" font-weight="bold" font-family="monospace">👤 USUARIO (consulta legal)</text>
+
+  <line x1="550" y1="108" x2="550" y2="130" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+
+  <!-- ═══ ROUND 1: ORCHESTRATOR ═══ -->
+  <rect x="380" y="135" width="340" height="44" rx="8" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="550" y="152" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold" font-family="monospace">🧠 ORCHESTRATOR AGENT</text>
+  <text x="550" y="167" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Recibe query → delega a especialistas → consolida → entrega</text>
+
+  <!-- Orchestrator → Router -->
+  <line x1="450" y1="179" x2="250" y2="210" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <!-- Orchestrator → Strategist -->
+  <line x1="550" y1="179" x2="550" y2="210" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <!-- Orchestrator → Graph Analyst -->
+  <line x1="650" y1="179" x2="850" y2="210" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- ═══ ROUND 2: THREE PARALLEL AGENTS ═══ -->
+
+  <!-- ROUTER AGENT -->
+  <rect x="120" y="215" width="260" height="50" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="250" y="234" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold" font-family="monospace">🔀 ROUTER AGENT</text>
+  <text x="250" y="250" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Clasifica: LOCAL / WEB / HÍBRIDO / ESTADÍSTICO</text>
+  <text x="250" y="262" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">Groq LLM temperature=0.1 → decisión + hyde + estrategia</text>
+
+  <!-- STRATEGIST AGENT -->
+  <rect x="410" y="215" width="280" height="50" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="550" y="234" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold" font-family="monospace">🎯 RETRIEVAL STRATEGIST</text>
+  <text x="550" y="250" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Determina: top_k, peso FAISS/BM25, fuentes a consultar</text>
+  <text x="550" y="262" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">LLM temperature=0.2 → plan de recuperación adaptativo</text>
+
+  <!-- GRAPH ANALYST -->
+  <rect x="730" y="215" width="260" height="50" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="860" y="234" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="bold" font-family="monospace">🕸️ GRAPH ANALYST AGENT</text>
+  <text x="860" y="250" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Analiza NetworkX: patrones, frecuencias, cadenas</text>
+  <text x="860" y="262" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">Algorítmico + LLM → interpretación topológica</text>
+
+  <!-- Arrow: Router → Retrieval Tools -->
+  <line x1="250" y1="265" x2="250" y2="310" stroke="#22d3ee" stroke-width="1" marker-end="url(#arrow-cyan)"/>
+  <!-- Arrow: Strategist → Retrieval Tools -->
+  <line x1="550" y1="265" x2="550" y2="310" stroke="#34d399" stroke-width="1" marker-end="url(#arrow-green)"/>
+  <!-- Arrow: Graph Analyst → Graph -->
+  <line x1="860" y1="265" x2="860" y2="310" stroke="#a78bfa" stroke-width="1" marker-end="url(#arrow-violet)"/>
+
+  <!-- ═══ ROUND 3: RETRIEVAL LAYER ═══ -->
+  <rect x="120" y="315" width="860" height="100" rx="8" fill="rgba(30,41,59,0.3)" stroke="#475569" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="550" y="332" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold" font-family="monospace">CAPA DE RECUPERACIÓN (tools)</text>
+
+  <!-- FAISS -->
+  <rect x="150" y="342" width="180" height="40" rx="6" fill="rgba(76,29,149,0.3)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="240" y="358" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="bold" font-family="monospace">🔍 FAISS (vector)</text>
+  <text x="240" y="372" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">top_k dinámico según estrategia</text>
+
+  <!-- BM25 -->
+  <rect x="370" y="342" width="180" height="40" rx="6" fill="rgba(76,29,149,0.3)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="460" y="358" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="bold" font-family="monospace">📄 BM25 (léxico)</text>
+  <text x="460" y="372" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">peso ajustable por consulta</text>
+
+  <!-- WEB SEARCH -->
+  <rect x="590" y="342" width="180" height="40" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1"/>
+  <text x="680" y="358" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold" font-family="monospace">🌐 Web Search</text>
+  <text x="680" y="372" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">Serper API (solo si aplica)</text>
+
+  <!-- NETWORKX -->
+  <rect x="800" y="342" width="155" height="40" rx="6" fill="rgba(76,29,149,0.3)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="877" y="358" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="bold" font-family="monospace">🕸️ NetworkX</text>
+  <text x="877" y="372" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">exploración dirigida</text>
+
+  <!-- Retrieval → Synthesizer -->
+  <line x1="240" y1="382" x2="300" y2="440" stroke="#a78bfa" stroke-width="1" marker-end="url(#arrow-violet)"/>
+  <line x1="460" y1="382" x2="460" y2="440" stroke="#a78bfa" stroke-width="1" marker-end="url(#arrow-violet)"/>
+  <line x1="680" y1="382" x2="620" y2="440" stroke="#a78bfa" stroke-width="1" marker-end="url(#arrow-violet)"/>
+  <line x1="877" y1="382" x2="877" y2="440" stroke="#a78bfa" stroke-width="1" marker-end="url(#arrow-violet)"/>
+
+  <!-- ═══ ROUND 4: WRITER + CRITIC ═══ -->
+
+  <!-- LEGAL WRITER -->
+  <rect x="300" y="445" width="320" height="50" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="460" y="464" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold" font-family="monospace">✍️ LEGAL WRITER AGENT</text>
+  <text x="460" y="480" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Redacta dictamen con estilo forense, citas y estructura</text>
+  <text x="460" y="492" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">Groq/DeepSeek temperature=0.1 → respuesta estructurada</text>
+
+  <!-- Writer → Critic -->
+  <line x1="620" y1="470" x2="730" y2="470" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+
+  <!-- CRITIC AGENT -->
+  <rect x="735" y="445" width="280" height="50" rx="6" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="875" y="464" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold" font-family="monospace">🔍 CRITIC AGENT (revisor)</text>
+  <text x="875" y="480" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Verifica: citas reales? responde la pregunta? alucina?</text>
+  <text x="875" y="492" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">LLM temperature=0.0 → checklist de calidad</text>
+
+  <!-- Critic → Orchestrator (feedback loop) -->
+  <line x1="875" y1="495" x2="875" y2="540" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="875" y1="540" x2="550" y2="540" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="550" y1="540" x2="550" y2="179" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-rose)"/>
+
+  <text x="692" y="535" text-anchor="middle" fill="#fb7185" font-size="9" font-family="monospace" font-style="italic">↻ Iteración si critic找到了 issues (máx 2)</text>
+
+  <!-- ═══ OUTPUT ═══ -->
+  <line x1="460" y1="495" x2="460" y2="580" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <rect x="340" y="585" width="240" height="44" rx="22" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="460" y="602" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold" font-family="monospace">📨 RESPUESTA + AUDIT</text>
+  <text x="460" y="618" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Incluye trazabilidad multi-agente</text>
+
+  <!-- ═══ LEGEND ═══ -->
+  <rect x="30" y="660" width="1040" height="145" rx="8" fill="rgba(15,23,42,0.8)" stroke="#1e293b" stroke-width="1"/>
+  <text x="550" y="680" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="bold" font-family="monospace">Leyenda</text>
+
+  <!-- Agent types -->
+  <rect x="50" y="692" width="16" height="12" rx="3" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1"/>
+  <text x="72" y="702" fill="#22d3ee" font-size="9" font-family="monospace">Agente de interfaz/salida</text>
+
+  <rect x="220" y="692" width="16" height="12" rx="3" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1"/>
+  <text x="242" y="702" fill="#34d399" font-size="9" font-family="monospace">Agente orquestador/estrategia</text>
+
+  <rect x="430" y="692" width="16" height="12" rx="3" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="452" y="702" fill="#a78bfa" font-size="9" font-family="monospace">Agente analítico/datos</text>
+
+  <rect x="600" y="692" width="16" height="12" rx="3" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="1"/>
+  <text x="622" y="702" fill="#fb7185" font-size="9" font-family="monospace">Agente crítico/control calidad</text>
+
+  <!-- Arrow styles -->
+  <line x1="50" y1="725" x2="80" y2="725" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <text x="88" y="728" fill="#94a3b8" font-size="9" font-family="monospace">Flujo principal (secuencial)</text>
+
+  <line x1="260" y1="725" x2="290" y2="725" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-rose)"/>
+  <text x="298" y="728" fill="#fb7185" font-size="9" font-family="monospace">Feedback loop (iteración correctiva)</text>
+
+  <!-- Tool call -->
+  <rect x="520" y="715" width="100" height="22" rx="4" fill="rgba(30,41,59,0.3)" stroke="#475569" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="570" y="730" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">Tool layer</text>
+
+  <!-- Cost callout -->
+  <rect x="50" y="750" width="1000" height="42" rx="4" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="0.5"/>
+  <text x="550" y="768" text-anchor="middle" fill="#fbbf24" font-size="10" font-family="monospace">💰 Costo estimado: 3-7× más LLM calls vs actual | 5-8 calls/query vs 2-3 actual | ~$0.02-0.08/query vs ~$0.005-0.015</text>
+  <text x="550" y="783" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">Pero menos respuestas con alucinaciones, mejor estructura, trazabilidad multi-nivel</text>
+
+</svg>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 1: CURRENT VS MULTI-AGENT           -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>1. Estado actual vs Multi-Agente</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+<div class="card rose">
+<h3 style="color:#fb7185;margin-top:0;">🔴 Hoy: Pipeline secuencial</h3>
+<ul>
+  <li><strong>1 orquestador monolítico</strong> — <code>run_console_query()</code> ejecuta todo en serie</li>
+  <li><strong>2-3 LLM calls/consulta</strong> (router + síntesis + follow-ups)</li>
+  <li><strong>Sin feedback loop</strong> — lo que sale del LLM va directo al usuario</li>
+  <li><strong>top_k fijo</strong> — siempre 7 documentos, sin importar la complejidad</li>
+  <li><strong>Sin verificación</strong> — si el LLM alucina una cita, nadie la detecta</li>
+  <li><strong>1 solo rol</strong> — el mismo LLM hace de juez, escritor y corrector</li>
+</ul>
+</div>
+
+<div class="card emerald">
+<h3 style="color:#34d399;margin-top:0;">🟢 Multi-Agente: Pipeline orquestado</h3>
+<ul>
+  <li><strong>1 orquestador + 4-5 agentes especializados</strong></li>
+  <li><strong>5-8 LLM calls/consulta</strong> (cada agente aporta su llamada)</li>
+  <li><strong>Feedback loop</strong> — el crítico puede pedir re-escritura o re-retrieval</li>
+  <li><strong>top_k adaptativo</strong> — el retrieval strategist decide según la consulta</li>
+  <li><strong>Verificación de citas</strong> — el crítico valida que cada cita exista en el corpus</li>
+  <li><strong>Roles separados</strong> — cada agente tiene un prompt experto diferente</li>
+</ul>
+</div>
+
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 2: AGENTES PROPUESTOS               -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>2. Los agentes propuestos</h2>
+
+<table>
+<tr>
+  <th>Agente</th>
+  <th>Rol</th>
+  <th>LLM calls</th>
+  <th>Herramientas</th>
+  <th>Complejidad</th>
+</tr>
+<tr>
+  <td><span class="tag cyan">🔀 Router</span></td>
+  <td>Clasifica consulta + genera HyDE + sugiere estrategia retrieval</td>
+  <td>1</td>
+  <td>Prompt + temperature=0.0</td>
+  <td>🔵 Baja (ya existe)</td>
+</tr>
+<tr>
+  <td><span class="tag green">🎯 Retrieval Strategist</span></td>
+  <td>Define plan de búsqueda: top_k dinámico, peso FAISS/BM25, fuentes</td>
+  <td>1</td>
+  <td>Prompt + accesso a metadatos del corpus</td>
+  <td>🟡 Media</td>
+</tr>
+<tr>
+  <td><span class="tag violet">🕸️ Graph Analyst</span></td>
+  <td>Analiza NetworkX: frecuencias, patrones, cadenas de precedente</td>
+  <td>0-1</td>
+  <td>NetworkX API (algorítmico) + LLM para interpretación</td>
+  <td>🟡 Media</td>
+</tr>
+<tr>
+  <td><span class="tag cyan">✍️ Legal Writer</span></td>
+  <td>Redacta dictamen con estructura forense y citas</td>
+  <td>1</td>
+  <td>Prompt + contexto recuperado + historial</td>
+  <td>🔵 Baja (evolución del synthesizer)</td>
+</tr>
+<tr>
+  <td><span class="tag rose">🔍 Critic</span></td>
+  <td>Verifica citas, detecta alucinaciones, evalúa calidad</td>
+  <td>1-2</td>
+  <td>Prompt + acceso a FAISS (verificar que un doc_id existe)</td>
+  <td>🔴 Alta (lógica de verificación)</td>
+</tr>
+<tr>
+  <td><span class="tag green">🧠 Orchestrator</span></td>
+  <td>Coordina flujo, decide iteraciones, consolida respuestas</td>
+  <td>0-1</td>
+  <td>Delegate a agentes, decide feedback loop</td>
+  <td>🔴 Alta</td>
+</tr>
+</table>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 3: COST ANALYSIS                    -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>3. Análisis de costos</h2>
+
+<h3>3.1 LLM calls por consulta</h3>
+
+<table>
+<tr>
+  <th>Escenario</th>
+  <th>Calls actual</th>
+  <th>Calls multi-agente</th>
+  <th>Incremento</th>
+</tr>
+<tr>
+  <td>Consulta simple (LOCAL, respuesta directa)</td>
+  <td>2</td>
+  <td>5 (router + strategist + graph + writer + critic)</td>
+  <td><span class="tag rose">2.5×</span></td>
+</tr>
+<tr>
+  <td>Consulta compleja (estadística + feedback loop)</td>
+  <td>3</td>
+  <td>8 (router + strategist + graph + writer + critic + 1 re-write + follow-up)</td>
+  <td><span class="tag rose">2.7×</span></td>
+</tr>
+<tr>
+  <td>Consulta WEB (búsqueda externa)</td>
+  <td>2</td>
+  <td>5 (router + strategist + web search + writer + critic)</td>
+  <td><span class="tag rose">2.5×</span></td>
+</tr>
+</table>
+
+<h3>3.2 Costo monetario estimado</h3>
+
+<p class="cost">Usando <strong>Groq</strong> (modelo base: llama-3.3-70b ~$0.59/M input tokens, $0.79/M output tokens via Groq — realmente Groq es gratis/rate-limited). Con <strong>DeepSeek V4</strong> u otro proveedor pago:</p>
+
+<table>
+<tr>
+  <th>Métrica</th>
+  <th>Actual</th>
+  <th>Multi-Agente</th>
+</tr>
+<tr>
+  <td>Input tokens promedio/query</td>
+  <td>~4,500</td>
+  <td>~12,000 (cada agente recibe contexto relevante)</td>
+</tr>
+<tr>
+  <td>Output tokens promedio/query</td>
+  <td>~1,200</td>
+  <td>~3,500 (múltiples agentes generan)</td>
+</tr>
+<tr>
+  <td>Costo/query (DeepSeek V4 flash)</td>
+  <td>~$0.002</td>
+  <td>~$0.008</td>
+</tr>
+<tr>
+  <td>Costo/query (DeepSeek V4 pro)</td>
+  <td>~$0.015</td>
+  <td>~$0.06</td>
+</tr>
+<tr>
+  <td>Costo batería 100 queries/día</td>
+  <td>~$0.20</td>
+  <td>~$0.80</td>
+</tr>
+<tr>
+  <td>Costo mensual (3,000 queries)</td>
+  <td>~$6.00</td>
+  <td>~$24.00</td>
+</tr>
+</table>
+
+<div class="card amber">
+<h3 style="color:#fbbf24;margin-top:0;">⚠️ Consideraciones de costo real</h3>
+<ul>
+  <li><strong>Groq es gratuito</strong> (con rate limits) — el costo adicional en LLM calls es cero mientras uses Groq. El incremento real está en latencia (más calls seriales).</li>
+  <li><strong>DeepSeek / OpenAI</strong> — el costo 4× puede mitigarse usando modelos más baratos para agentes auxiliares (router, strategist, critic con modelos pequeños tipo llama-3.1-8b cuestan 10× menos).</li>
+  <li>El <strong>Critic Agent</strong> puede ejecutarse con un modelo 8B que cuesta ~$0.04/M tokens → ~$0.0005 por verificación.</li>
+  <li>Si el crítico detecta un problema y pide re-escritura, el costo se duplica en esa consulta pero ganas en calidad.</li>
+</ul>
+</div>
+
+<h3>3.3 Impacto en latencia</h3>
+
+<table>
+<tr>
+  <th>Fase</th>
+  <th>Actual</th>
+  <th>Multi-Agente</th>
+</tr>
+<tr>
+  <td>Router</td>
+  <td>~1.5s</td>
+  <td>~1.5s</td>
+</tr>
+<tr>
+  <td>Retrieval (FAISS + BM25 + Graph)</td>
+  <td>~2.0s</td>
+  <td>~3.0s (incluye strategist pensando)</td>
+</tr>
+<tr>
+  <td>Síntesis (Writer)</td>
+  <td>~8-15s</td>
+  <td>~8-15s</td>
+</tr>
+<tr>
+  <td>Critic + posible re-escritura</td>
+  <td>—</td>
+  <td>~3-8s adicionales</td>
+</tr>
+<tr>
+  <td><strong>Total</strong></td>
+  <td><strong>~12-18s</strong></td>
+  <td><strong>~15-28s</strong></td>
+</tr>
+</table>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 4: IMPACTO EN CALIDAD               -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>4. Impacto en la calidad de las respuestas</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+<div class="card">
+<h3 style="color:#22d3ee;margin-top:0;">✅ Mejoras esperadas</h3>
+<ul>
+  <li><strong>Menos alucinaciones</strong> — el Critic verifica que cada CAS. N°/EXP. N° exista realmente en el corpus. Si el Writer inventó una cita, el Critic la detecta y pide re-escritura.</li>
+  <li><strong>Mejor estructura</strong> — el Writer puede especializarse en un formato específico (tablas, secciones, citas formales) sin que el Router tenga que preocuparse por eso.</li>
+  <li><strong>Recuperación adaptativa</strong> — el Strategist puede pedir más chunks si la consulta es compleja, o menos si es simple. Hoy siempre top_k=7.</li>
+  <li><strong>Análisis estadístico real</strong> — el Graph Analyst puede contar frecuencias con precisión algorítmica en vez de depender de que el LLM "adivine" cuántos casos hay.</li>
+  <li><strong>Repreguntas contextuales</strong> — el historial multi-agente permite que el Writer recuerde qué dijo en la consulta anterior con precisión.</li>
+  <li><strong>Trazabilidad multi-nivel</strong> — cada agente puede dejar su propio audit trail, no solo los chunks sino también las decisiones de cada agente.</li>
+</ul>
+</div>
+
+<div class="card">
+<h3 style="color:#fb7185;margin-top:0;">⚠️ Riesgos y desventajas</h3>
+<ul>
+  <li><strong>Latencia mayor</strong> — 15-28s vs 12-18s. En modo interactivo se nota. El streaming ayuda a disimularlo.</li>
+  <li><strong>Complejidad de debugging</strong> — 6 agentes = 6 veces más puntos de fallo. Si el Critic rechaza una respuesta válida, hay que debuggear por qué.</li>
+  <li><strong>Overhead de tokens</strong> — cada agente recibe contexto (instrucciones, historial) que se suma al total. Aunque los agentes auxiliares usen modelos más baratos, el input total crece.</li>
+  <li><strong>Riesgo de loops infinitos</strong> — el Critic podría rechazar repetidamente. Necesita un límite duro (máx 2 iteraciones).</li>
+  <li><strong>Calidad inconsistente entre agentes</strong> — si el Router funciona mal, todo el pipeline se degrada. Si el Critic es demasiado estricto, rechaza respuestas válidas.</li>
+  <li><strong>Más código, más mantenimiento</strong> — cada agente es una clase con su prompt, tools, lógica. El código base crece 3-4×.</li>
+</ul>
+</div>
+
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 5: PLAN DE IMPLEMENTACIÓN           -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>5. Plan de implementación por fases</h2>
+
+<table>
+<tr>
+  <th>Fase</th>
+  <th>Qué incluye</th>
+  <th>Esfuerzo</th>
+  <th>Riesgo</th>
+  <th>Valor</th>
+</tr>
+<tr>
+  <td><span class="tag green">Fase 1</span></td>
+  <td><strong>Critic Agent</strong> — añadir verificador de citas POST-síntesis. Lee la respuesta, verifica que cada doc_id exista en FAISS. Si encuentra una cita inventada, marca advertencia. Sin re-escritura automática.</td>
+  <td>🟢 1-2 días</td>
+  <td>🟢 Bajo</td>
+  <td>🔥 Alto (detecta alucinaciones)</td>
+</tr>
+<tr>
+  <td><span class="tag cyan">Fase 2</span></td>
+  <td><strong>Retrieval Strategist</strong> — antes de recuperar, el strategist analiza la query y decide top_k y pesos. top_k dinámico (3-15) en vez de fijo 7.</td>
+  <td>🟡 2-3 días</td>
+  <td>🟡 Medio</td>
+  <td>🔥 Alto (recuperación adaptativa)</td>
+</tr>
+<tr>
+  <td><span class="tag violet">Fase 3</span></td>
+  <td><strong>Graph Analyst Agent</strong> — agente especializado en consultas estadísticas. Ej: "qué juez emitió más sentencias" → usa NetworkX algorítmicamente + LLM para narrativa.</td>
+  <td>🟡 2-3 días</td>
+  <td>🟡 Medio</td>
+  <td>🔥 Alto (precision estadística)</td>
+</tr>
+<tr>
+  <td><span class="tag amber">Fase 4</span></td>
+  <td><strong>Feedback loop</strong> — cuando el Critic detecta un problema, el Orchestrador decide si re-escribir o re-recuperar. Máx 2 iteraciones. Sistema de scoring de calidad.</td>
+  <td>🔴 3-5 días</td>
+  <td>🔴 Alto</td>
+  <td>💎 Máximo</td>
+</tr>
+<tr>
+  <td><span class="tag green">Fase 5</span></td>
+  <td><strong>Orquestador formal</strong> — refactorizar run_console_query() como un Orchestrator Agent que delega explícitamente. Cada agente es una clase con `async def run()`.</td>
+  <td>🔴 3-5 días</td>
+  <td>🔴 Alto</td>
+  <td>💎 Máximo</td>
+</tr>
+</table>
+
+<h3>Recomendación: Fase 1 ya</h3>
+
+<div class="card emerald">
+<p style="margin:0;font-size:14px;">
+<strong>El Critic Agent es el de mayor valor con menor riesgo.</strong> No cambia el pipeline existente — se ejecuta después del Writer y solo emite una advertencia si detecta una cita falsa. En una segunda iteración, puede pedir re-escritura. Es implementable en 1-2 días y resuelve el problema más grave de cualquier RAG: <strong>las alucinaciones en citas jurisprudenciales</strong>.
+</p>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 6: ARQUITECTURA DE CÓDIGO           -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>6. Estructura de código propuesta</h2>
+
+<div class="card">
+<pre style="background:#0f172a;padding:16px;border-radius:6px;overflow-x:auto;color:#e2e8f0;font-size:12px;line-height:1.6;">
+agents/                              # Hoy: router.py + synthesizer.py
+├── __init__.py
+├── orchestrator.py                  # Nuevo: coordina el flujo multi-agente
+├── router.py                        # Ya existe (mejorar)
+├── retrieval_strategist.py          # Nuevo
+├── graph_analyst.py                 # Nuevo
+├── legal_writer.py                  # Refactor de synthesizer.py
+└── critic.py                        # Nuevo: verificador de citas
+
+core/                                # Sin cambios mayores
+├── config.py
+├── llm_clients.py
+└── embedding.py
+
+retrieval/                           # Sin cambios
+├── hybrid_search.py
+├── graph_search.py
+├── web_search.py
+└── ...
+
+utils/
+└── logger_utils.py                  # Extender para audit multi-agente
+</pre>
+</div>
+
+<h3>Ejemplo de firma de agente (Python)</h3>
+
+<div class="card">
+<pre style="background:#0f172a;padding:16px;border-radius:6px;overflow-x:auto;color:#e2e8f0;font-size:12px;line-height:1.6;">
+<span style="color:#22d3ee;">class CriticAgent:</span>
+    """Verifica que la respuesta del Writer use citas reales del corpus."""
+
+    <span style="color:#94a3b8;">def __init__(self, llm_client, faiss_index, metadata):</span>
+        self.llm = llm_client
+        self.faiss = faiss_index
+        self.metadata = metadata
+
+    <span style="color:#34d399;">async def verify(self, response: str, context_docs: list) -> Verdict:</span>
+        # 1. Extraer todas las citas (CAS. N°, EXP. N°, doc_id) de la respuesta
+        cited_docs = extract_citations(response)
+
+        # 2. Verificar que cada doc_id existe en FAISS/metadata
+        missing = [d for d in cited_docs if d not in self.metadata]
+
+        # 3. Verificar que cada cita está realmente en el contexto entregado
+        hallucinated = [d for d in cited_docs if d not in context_docs]
+
+        # 4. LLM evalúa coherencia general (opcional)
+        if hallucinated:
+            return Verdict(
+                passed=False,
+                errors=[f"Cita inventada: {d}" for d in hallucinated],
+                action="re-rewrite"  # o "warn-only" en Fase 1
+            )
+
+        return Verdict(passed=True, errors=[], action="accept")
+</pre>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SECTION 7: DECISIÓN                         -->
+<!-- ════════════════════════════════════════════ -->
+
+<h2>7. ¿Vale la pena?</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+
+<div class="card">
+<div class="metric emerald">👍</div>
+<div class="metric-label">CUANDO SÍ</div>
+<ul style="font-size:13px;">
+  <li>El sistema se usa profesionalmente (abogados reales confiando en las respuestas)</li>
+  <li>Las alucinaciones en citas tienen costo real (mal praxis, demandas)</li>
+  <li>Necesitas consultas estadísticas precisas ("cuántos casos", "qué juez")</li>
+  <li>Tienes presupuesto para ~$20-30/mes en LLM o usas Groq gratuito</li>
+</ul>
+</div>
+
+<div class="card">
+<div class="metric amber">🤷</div>
+<div class="metric-label">ZONA GRIS</div>
+<ul style="font-size:13px;">
+  <li>Uso personal / exploratorio</li>
+  <li>Las consultas son siempre del mismo tipo (ej. solo laboral simple)</li>
+  <li>Estás OK con una tasa baja de alucinaciones</li>
+  <li>No necesitas consultas estadísticas</li>
+</ul>
+</div>
+
+<div class="card">
+<div class="metric rose">👎</div>
+<div class="metric-label">CUANDO NO</div>
+<ul style="font-size:13px;">
+  <li>La latencia es crítica (necesitas respuestas en &lt;10s)</li>
+  <li>Estás en la fase de prototipo/validación (primero funcione, luego mejore)</li>
+  <li>El corpus cambia semanalmente (mantener agentes actualizados es overhead)</li>
+  <li>Tienes recursos limitados de desarrollo</li>
+</ul>
+</div>
+
+</div>
+
+<div class="card amber" style="margin-top:24px;">
+<h3 style="color:#fbbf24;margin-top:0;">🎯 Mi recomendación</h3>
+<p style="font-size:15px;line-height:1.6;">
+<strong>Implementa solo el Critic Agent (Fase 1) ahora.</strong> Es bajo riesgo, bajo esfuerzo (1-2 días), y resuelve el problema más urgente: verificar que las citas jurisprudenciales sean reales. El resto del pipeline multi-agente puede esperar a que valides si el Critic mejora la calidad percibida.
+
+Si después del Critic ves que las consultas estadísticas son inexactas, añade el Graph Analyst (Fase 3). Si el retrieval es insuficiente para consultas complejas, añade el Strategist (Fase 2).
+
+<strong>No necesitas todo o nada.</strong> Cada agente es incremental. Empieza por el que más valor da con menos riesgo.
+</p>
+</div>
+
+<br>
+<hr style="border-color:#1e293b;">
+<p style="color:#64748b;font-size:12px;text-align:center;">Lex RAG — Análisis Arquitectónico Multi-Agente · 2026-05-19</p>
+
+</body>
+</html>

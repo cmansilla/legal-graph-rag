@@ -1,0 +1,565 @@
+==============================================================================================================
+BATERÍA FINAL COMPLETA — 20 CONSULTAS NUEVAS — TRazabilidad TOTAL
+Fecha: 2026-05-20 13:43:02
+Total: 20 | Exitosas: 20
+Tiempo total: 858.7s | Promedio: 42.9s
+Feedback loop activado: 0 consultas
+
+--------------------------------------------------------------------------------------------------------------
+ID    Nivel        T(s)   Estrategia             F    BM   RRF   Fil  CV   CH   Score  FB   Desc                
+--------------------------------------------------------------------------------------------------------------
+S01   simple       45.9   simple k=4 g=N         8    8    8     7    5    0    100%   —    Estabilidad laboral
+S02   simple       26.2   simple k=4 g=N         8    8    8     8    5    0    100%   —    Legítima defensa
+S03   simple       41.5   simple k=4 g=N         8    8    8     8    5    0    100%   —    Prescripción adquisi
+S04   simple       38.5   simple k=4 g=N         8    8    8     8    4    0    100%   —    Base imponible
+S05   simple       40.7   simple k=4 g=N         8    8    8     8    1    0    100%   —    Debido proceso
+M01   media        40.6   media k=7 g=S1         21   21   14    28   5    0    100%   —    Despido y embarazo
+M02   media        35.9   compleja k=10 g=S2     40   40   20    60   6    0    100%   —    Arras confirmatorias
+M03   media        51.6   media k=7 g=S1         21   21   14    28   1    0    100%   —    Tenencia y porte de 
+M04   media        49.8   media k=7 g=S1         21   21   14    27   8    0    100%   —    Alimentos y tenencia
+M05   media        44.5   media k=7 g=S1         21   21   14    27   5    0    100%   —    Prueba de oficio y c
+C01   compleja     42.1   compleja k=11 g=S2     44   44   22    61   2    0    100%   —    Negociación colectiv
+C02   compleja     43.8   compleja k=10 g=S2     40   40   20    57   8    0    100%   —    Control difuso y con
+C03   compleja     54.7   compleja k=11 g=S2     44   44   22    64   3    0    100%   —    Lavado de activos y 
+C04   compleja     56.4   compleja k=11 g=S2     44   44   22    66   13   0    100%   —    Tercería y medidas c
+C05   compleja     45.5   compleja k=11 g=S2     44   44   22    64   2    0    100%   —    Daño ambiental y res
+E01   estadistica  38.7   media k=10 g=S1        30   30   20    40   8    0    100%   —    Demandado más frecue
+E02   estadistica  31.7   simple k=5 g=N         10   10   10    10   5    2    71%    —    Materia más litigada
+E03   estadistica  39.6   estadistica k=12 g=S2  48   48   24    71   9    0    100%   —    Sala con más carga
+E04   estadistica  48.9   estadistica k=12 g=S2  48   48   24    72   10   0    100%   —    Indemnización vs rep
+E05   compleja     42.1   compleja k=11 g=S2     44   44   22    64   6    0    100%   —    Accidente de trabajo
+
+==============================================================================================================
+PRECISIÓN DE CLASIFICACIÓN (STRATEGIST)
+==============================================================================================================
+
+  simple       5/5 (100%) ████████████████████
+  media        4/5 (80%) ████████████████░░░░
+  compleja     6/6 (100%) ████████████████████
+  estadistica  2/4 (50%) ██████████░░░░░░░░░░
+
+ESTRATEGIAS APLICADAS:
+  simple k=4 g=N             5 consultas
+  compleja k=11 g=S2         5 consultas
+  media k=7 g=S1             4 consultas
+  compleja k=10 g=S2         2 consultas
+  estadistica k=12 g=S2      2 consultas
+  media k=10 g=S1            1 consultas
+  simple k=5 g=N             1 consultas
+
+ESTADÍSTICAS DEL CRÍTICO:
+  Score 100%:    19/20
+  Score >= 50%:  20/20
+  Total halluc:  2
+  Feedback loop: 0/20
+
+==============================================================================================================
+DETALLE POR CONSULTA
+==============================================================================================================
+
+##############################################################################################################
+## S01 | SIMPLE | Laboral
+**Desc:** Estabilidad laboral
+**Query:** estabilidad laboral de entrada
+**Tiempo:** 45.9s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta sobre "estabilidad laboral de entrada" se refiere a la búsqueda de información relaciona...
+
+  → ESTRATEGIA
+    simple | top_k=4 | mode=hybrid
+    Grafo: N
+    Razón: Regla: consulta corta (4 palabras, <7): top_k reducido, sin grafo
+
+  → RETRIEVAL
+    FAISS: 8 | BM25: 8 | RRF: 8 | Filtrados: 7
+
+  → GRAPH ANALYST
+    Jueces top: []
+    Leyes top: []
+    Cadenas: 0
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 5 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## S02 | SIMPLE | Penal
+**Desc:** Legítima defensa
+**Query:** requisitos de la legitima defensa
+**Tiempo:** 26.2s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta sobre "requisitos de la legitima defensa" implica una búsqueda de información jurídica r...
+
+  → ESTRATEGIA
+    simple | top_k=4 | mode=hybrid
+    Grafo: N
+    Razón: Regla: consulta corta (5 palabras, <7): top_k reducido, sin grafo
+
+  → RETRIEVAL
+    FAISS: 8 | BM25: 8 | RRF: 8 | Filtrados: 8
+
+  → GRAPH ANALYST
+    Jueces top: []
+    Leyes top: []
+    Cadenas: 0
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 5 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## S03 | SIMPLE | Civil
+**Desc:** Prescripción adquisitiva
+**Query:** prescripcion adquisitiva de dominio
+**Tiempo:** 41.5s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta sobre "prescripcion adquisitiva de dominio" se refiere a un concepto jurídico específico...
+
+  → ESTRATEGIA
+    simple | top_k=4 | mode=hybrid
+    Grafo: N
+    Razón: Regla: consulta corta (4 palabras, <7): top_k reducido, sin grafo
+
+  → RETRIEVAL
+    FAISS: 8 | BM25: 8 | RRF: 8 | Filtrados: 8
+
+  → GRAPH ANALYST
+    Jueces top: []
+    Leyes top: []
+    Cadenas: 0
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 5 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## S04 | SIMPLE | Tributario
+**Desc:** Base imponible
+**Query:** base imponible del impuesto predial
+**Tiempo:** 38.5s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta sobre la "base imponible del impuesto predial" se refiere a la cantidad sobre la cual se...
+
+  → ESTRATEGIA
+    simple | top_k=4 | mode=hybrid
+    Grafo: N
+    Razón: Regla: consulta corta (5 palabras, <7): top_k reducido, sin grafo
+
+  → RETRIEVAL
+    FAISS: 8 | BM25: 8 | RRF: 8 | Filtrados: 8
+
+  → GRAPH ANALYST
+    Jueces top: []
+    Leyes top: []
+    Cadenas: 0
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 4 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## S05 | SIMPLE | Constitucional
+**Desc:** Debido proceso
+**Query:** derecho al debido proceso
+**Tiempo:** 40.7s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre el "derecho al debido proceso" implica una búsqueda de información relacion...
+
+  → ESTRATEGIA
+    simple | top_k=4 | mode=hybrid
+    Grafo: N
+    Razón: Regla: consulta corta (4 palabras, <7): top_k reducido, sin grafo
+
+  → RETRIEVAL
+    FAISS: 8 | BM25: 8 | RRF: 8 | Filtrados: 8
+
+  → GRAPH ANALYST
+    Jueces top: []
+    Leyes top: []
+    Cadenas: 0
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 1 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## M01 | MEDIA | Laboral
+**Desc:** Despido y embarazo
+**Query:** despido durante el periodo de prueba y proteccion de la maternidad
+**Tiempo:** 40.6s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre "despido durante el periodo de prueba y proteccion de la maternidad" implic...
+
+  → ESTRATEGIA
+    media | top_k=7 | mode=hybrid
+    Grafo: S1
+    Razón: Regla: múltiples conceptos con 'y' (11 palabras): top_k medio, grafo somero
+
+  → RETRIEVAL
+    FAISS: 21 | BM25: 21 | RRF: 14 | Filtrados: 28
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Blume Fortini", 3], ["Juez: Ledesma Narváez", 3], ["Juez: Ramos Núñez", 3]]
+    Leyes top: [["Ley: Código Civil, Art. 2202", 1], ["Ley: Código Civil, Art. 2203", 1], ["Ley: Código Civil, Art. 2204", 1]]
+    Cadenas: 6
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 5 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## M02 | MEDIA | Civil
+**Desc:** Arras confirmatorias y penal
+**Query:** diferencia entre arras confirmatorias y arras penales
+**Tiempo:** 35.9s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre la diferencia entre arras confirmatorias y arras penales implica una búsque...
+
+  → ESTRATEGIA
+    compleja | top_k=10 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta comparativa (7 palabras): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 40 | BM25: 40 | RRF: 20 | Filtrados: 60
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Ramos Lorenzo", 2], ["Juez: Silva Vallejo", 2], ["Juez: Torres Carrasco", 2]]
+    Leyes top: [["Ley: Artículo 205 Del Reglamento De La Ley De Contrataciones Y Adquisiciones Del Estado", 1], ["Ley: Artículo 294 Del Reglamento De La Ley De Contrataciones Y Adquisiciones Del Estado", 1], ["Ley: Artículo 51 De La Ley De Contrataciones Del Estado", 1]]
+    Cadenas: 9
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 6 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## M03 | MEDIA | Penal
+**Desc:** Tenencia y porte de armas
+**Query:** tenencia ilegal de armas y porte indebido de arma de fuego
+**Tiempo:** 51.6s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta sobre "tenencia ilegal de armas y porte indebido de arma de fuego" se refiere a un tema ...
+
+  → ESTRATEGIA
+    media | top_k=7 | mode=hybrid
+    Grafo: S1
+    Razón: Regla: múltiples conceptos con 'y' (11 palabras): top_k medio, grafo somero
+
+  → RETRIEVAL
+    FAISS: 21 | BM25: 21 | RRF: 14 | Filtrados: 28
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Palacios Villar", 2], ["Juez: Sivina Hurtado", 1], ["Juez: Roman Santisteban", 1]]
+    Leyes top: [["Ley: Art. 46 Del Código Penal", 2], ["Ley: Art. 300 Del Código De Procedimientos Penales", 1], ["Ley: Art. 107 Del Código Penal", 1]]
+    Cadenas: 6
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 1 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## M04 | MEDIA | Familia
+**Desc:** Alimentos y tenencia
+**Query:** criterios para fijar alimentos y tenencia compartida
+**Tiempo:** 49.8s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta sobre "criterios para fijar alimentos y tenencia compartida" implica una búsqueda de inf...
+
+  → ESTRATEGIA
+    media | top_k=7 | mode=hybrid
+    Grafo: S1
+    Razón: Regla: múltiples conceptos con 'y' (7 palabras): top_k medio, grafo somero
+
+  → RETRIEVAL
+    FAISS: 21 | BM25: 21 | RRF: 14 | Filtrados: 27
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Margarita Salcedo Guevara", 2], ["Juez: Iberico M", 1], ["Juez: Echevarria A", 1]]
+    Leyes top: [["Ley: Art. 6 De La Constitución Política Del Perú", 1], ["Ley: Art. 235 Del Código Civil", 1], ["Ley: Art. 423 Del Código Civil", 1]]
+    Cadenas: 6
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 8 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## M05 | MEDIA | Procesal
+**Desc:** Prueba de oficio y carga
+**Query:** procedencia de la prueba de oficio y carga de la prueba
+**Tiempo:** 44.5s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre "procedencia de la prueba de oficio y carga de la prueba" se refiere a la a...
+
+  → ESTRATEGIA
+    media | top_k=7 | mode=hybrid
+    Grafo: S1
+    Razón: Regla: múltiples conceptos con 'y' (11 palabras): top_k medio, grafo somero
+
+  → RETRIEVAL
+    FAISS: 21 | BM25: 21 | RRF: 14 | Filtrados: 27
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Alva Orlandini", 3], ["Juez: Bardelli Lartirigoyen", 3], ["Juez: Gonzales Ojeda", 3]]
+    Leyes top: [["Ley: Constitución Política Del Perú", 3], ["Ley: Código Procesal Constitucional", 3], ["Ley: Declaración Americana De Los Derechos Y Deberes Del Hombre", 3]]
+    Cadenas: 6
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 5 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## C01 | COMPLEJA | Laboral-Colectivo
+**Desc:** Negociación colectiva y huelga
+**Query:** cuales son los requisitos para declarar la ilegalidad de una huelga y cual es el procedimiento sancionador contra los trabajadores
+**Tiempo:** 42.1s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre los requisitos para declarar la ilegalidad de una huelga y el procedimiento...
+
+  → ESTRATEGIA
+    compleja | top_k=11 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta larga (24 palabras, >=15): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 44 | BM25: 44 | RRF: 22 | Filtrados: 61
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Vergara Gotelli", 2], ["Juez: Roman S", 2], ["Juez: Escarza E", 2]]
+    Leyes top: [["Ley: Código Civil", 3], ["Ley: Ley De Relaciones Colectivas De Trabajo", 2], ["Ley: Ley Nº 23506", 2]]
+    Cadenas: 11
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 2 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## C02 | COMPLEJA | Constitucional
+**Desc:** Control difuso y concentrado
+**Query:** diferencia entre el control difuso de constitucionalidad y el control concentrado segun la jurisprudencia del tribunal constitucio
+**Tiempo:** 43.8s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre la diferencia entre el control difuso de constitucionalidad y el control co...
+
+  → ESTRATEGIA
+    compleja | top_k=10 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta comparativa (18 palabras): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 40 | BM25: 40 | RRF: 20 | Filtrados: 57
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Gonzales Ojeda", 2], ["Juez: García Toma", 2], ["Juez: Landa Arroyo", 2]]
+    Leyes top: [["Ley: Decreto Legislativo N° 148", 2], ["Ley: Decreto Supremo N° 008-82-Vi", 2], ["Ley: Ley N° 29338", 2]]
+    Cadenas: 10
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 8 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## C03 | COMPLEJA | Penal-Económico
+**Desc:** Lavado de activos y delito precedente
+**Query:** que requisitos debe cumplir el delito precedente para configurar el lavado de activos y como se diferencia del delito de receptaci
+**Tiempo:** 54.7s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual se refiere a los requisitos que debe cumplir el delito precedente para configurar...
+
+  → ESTRATEGIA
+    compleja | top_k=11 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta larga (21 palabras, >=15): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 44 | BM25: 44 | RRF: 22 | Filtrados: 64
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Barrios Alvarado", 7], ["Juez: Príncipe Trujillo", 7], ["Juez: San Martín Castro", 6]]
+    Leyes top: [["Ley: Artículo 116 Del Texto Único Ordenado De La Ley Orgánica Del Poder Judicial", 4], ["Ley: Artículo 50 Del Código Penal", 3], ["Ley: Artículo 51 Del Código Penal", 3]]
+    Cadenas: 10
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 3 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## C04 | COMPLEJA | Procesal-Civil
+**Desc:** Tercería y medidas cautelares
+**Query:** en que casos procede la terceria de dominio frente a un embargo y cual es el tratamiento jurisprudencial de las medidas cautelares
+**Tiempo:** 56.4s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual se refiere a la terceria de dominio frente a un embargo y el tratamiento jurispru...
+
+  → ESTRATEGIA
+    compleja | top_k=11 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta larga (25 palabras, >=15): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 44 | BM25: 44 | RRF: 22 | Filtrados: 66
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Ortiz Portilla", 1], ["Juez: Santos Peña", 1], ["Juez: Palomino García", 1]]
+    Leyes top: [["Ley: Artículo 155° Del Texto Único Ordenado Del Código Tributario", 2], ["Ley: Artículo 104° Del Código Tributario", 2], ["Ley: Art. 452 Del Código Procesal Civil", 1]]
+    Cadenas: 9
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 13 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## C05 | COMPLEJA | Ambiental
+**Desc:** Daño ambiental y responsabilidad
+**Query:** cual es el regimen de responsabilidad civil por daño ambiental y como se aplica el principio contaminador pagador en la jurisprude
+**Tiempo:** 45.5s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre el régimen de responsabilidad civil por daño ambiental y la aplicación del ...
+
+  → ESTRATEGIA
+    compleja | top_k=11 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta larga (22 palabras, >=15): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 44 | BM25: 44 | RRF: 22 | Filtrados: 64
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: San Martín Castro", 3], ["Juez: Príncipe Trujillo", 3], ["Juez: Molina Ordóñez", 2]]
+    Leyes top: [["Ley: Artículo 116 Del Texto Único Ordenado De La Ley Orgánica Del Poder Judicial", 2], ["Ley: Artículo 22 Del Texto Único Ordenado De La Ley Orgánica Del Poder Judicial", 2], ["Ley: Artículo 103 De La Constitución Política", 1]]
+    Cadenas: 9
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 2 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## E01 | ESTADISTICA | Estadístico
+**Desc:** Demandado más frecuente
+**Query:** que empresa privada es la mas demandada en procesos laborales
+**Tiempo:** 38.7s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual se refiere a determinar qué empresa privada es la más demandada en procesos labor...
+
+  → ESTRATEGIA
+    media | top_k=10 | mode=hybrid
+    Grafo: S1
+    Razón: Se requiere un análisis estadístico de los expedientes y resoluciones laborales, por lo que se utilizará un modelo de re
+
+  → RETRIEVAL
+    FAISS: 30 | BM25: 30 | RRF: 20 | Filtrados: 40
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Julio Baltazar Durand Carrión", 4], ["Juez: Sergio Alejandro León Martínez", 4], ["Juez: José Alberto Oscátegui Arteta", 4]]
+    Leyes top: [["Ley: Código Procesal Civil, Artículos 386, 689, 720, 171", 1], ["Ley: Ley Del Procedimiento Administrativo General, Art. 202°", 1], ["Ley: Ley Del Procedimiento Administrativo General, Art. 10°", 1]]
+    Cadenas: 10
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 8 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## E02 | ESTADISTICA | Estadístico
+**Desc:** Materia más litigada
+**Query:** cual es la materia mas litigada en la corte suprema
+**Tiempo:** 31.7s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual sobre la materia más litigada en la Corte Suprema se refiere a la búsqueda de est...
+
+  → ESTRATEGIA
+    simple | top_k=5 | mode=hybrid
+    Grafo: N
+    Razón: La consulta es aparentemente simple y no requiere una búsqueda compleja en un grafo, por lo que se puede recuperar una c
+
+  → RETRIEVAL
+    FAISS: 10 | BM25: 10 | RRF: 10 | Filtrados: 10
+
+  → GRAPH ANALYST
+    Jueces top: []
+    Leyes top: []
+    Cadenas: 0
+
+  → CRÍTICO + FEEDBACK
+    Score: 71% | Pasó: False
+    Verificadas: 5 | Sospechosas: 2
+    Feedback loop: 0 iteraciones
+    ⚠️ '000415.html' no existe en el corpus
+    ⚠️ '000350.html' no existe en el corpus
+
+##############################################################################################################
+## E03 | ESTADISTICA | Estadístico
+**Desc:** Sala con más carga
+**Query:** que sala de la corte suprema tiene mas casos registrados
+**Tiempo:** 39.6s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual se refiere a la búsqueda de información estadística sobre las salas de la Corte S...
+
+  → ESTRATEGIA
+    estadistica | top_k=12 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: keyword estadística detectada (10 palabras)
+
+  → RETRIEVAL
+    FAISS: 48 | BM25: 48 | RRF: 24 | Filtrados: 71
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Magistrados Con Identidad Secreta", 2], ["Juez: Magistrados De La Sala Suprema", 2], ["Juez: Álvarez López", 2]]
+    Leyes top: [["Ley: Decreto Legislativo Novecientos Veintiséis", 2], ["Ley: Artículo Segundo Del Decreto Legislativo Novecientos Veintiséis", 2], ["Ley: Artículo Tercero De La Directiva Cero Cero Dos - Dos Mil Tres - P - Snt", 2]]
+    Cadenas: 11
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 9 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## E04 | ESTADISTICA | Comparativo
+**Desc:** Indemnización vs reposición
+**Query:** comparar la frecuencia de sentencias que ordenan indemnizacion frente a las que ordenan reposicion en casos de despido arbitrario
+**Tiempo:** 48.9s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual busca comparar la frecuencia de sentencias que ordenan indemnización frente a las...
+
+  → ESTRATEGIA
+    estadistica | top_k=12 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: keyword estadística detectada (19 palabras)
+
+  → RETRIEVAL
+    FAISS: 48 | BM25: 48 | RRF: 24 | Filtrados: 72
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Arévalo Vela", 2], ["Juez: No Se Menciona", 1], ["Juez: Farfán Osorio", 1]]
+    Leyes top: [["Ley: Código Procesal Constitucional", 2], ["Ley: Código Procesal Civil, Artículo 336, Numeral 3; Ley Procesal Del Trabajo, Artículo 58", 1], ["Ley: Artículo 370º Del Código Procesal Civil", 1]]
+    Cadenas: 11
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 10 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+##############################################################################################################
+## E05 | COMPLEJA | Hipotético
+**Desc:** Accidente de trabajo y responsabilidad
+**Query:** un trabajador sufrio un accidente laboral porque el empleador no implemento las medidas de seguridad obligatorias que acciones leg
+**Tiempo:** 42.1s | **Estado:** ✅
+**Router:** LOCAL | **HyDE:** La consulta actual se refiere a un trabajador que sufrió un accidente laboral debido a la falta de i...
+
+  → ESTRATEGIA
+    compleja | top_k=11 | mode=hybrid
+    Grafo: S2
+    Razón: Regla: consulta larga (30 palabras, >=15): top_k alto, grafo profundo
+
+  → RETRIEVAL
+    FAISS: 44 | BM25: 44 | RRF: 22 | Filtrados: 64
+
+  → GRAPH ANALYST
+    Jueces top: [["Juez: Miranda Canales", 3], ["Juez: Ledesma Narváez", 2], ["Juez: Blume Fortini", 2]]
+    Leyes top: [["Ley: Art. 10, Inc. D) De La Ley 25593", 1], ["Ley: Art. 12 Del Reglamento De La Ley 25593", 1], ["Ley: Art. 28 De La Constitución Política", 1]]
+    Cadenas: 10
+
+  → CRÍTICO + FEEDBACK
+    Score: 100% | Pasó: True
+    Verificadas: 6 | Sospechosas: 0
+    Feedback loop: 0 iteraciones
+
+==============================================================================================================
+FIN DEL REPORTE
+Generado: 2026-05-20 13:43:02
+==============================================================================================================

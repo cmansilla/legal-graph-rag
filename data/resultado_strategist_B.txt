@@ -1,0 +1,27 @@
+RESULTADOS: RETRIEVAL STRATEGIST — OPCIÓN B (REGLAS HÍBRIDAS)
+=============================================================
+Fecha: 2026-05-19
+
+Baseline anterior (solo LLM): 35% precisión, 20 LLM calls
+Opción B implementada:       75% precisión, 3 LLM calls
+
+MEJORA: +40 puntos porcentuales | -85% LLM calls
+
+── PRECISIÓN POR NIVEL ──
+  Simple:       5/5 = 100% ✅
+  Media:        2/5 =  40% ❌ (3 de 7 palabras caen en threshold simple)
+  Compleja:     5/6 =  83% ✅ (1 error: LLM clasificó mal query de 14 palabras)
+  Estadística:  4/4 = 100% ✅
+
+── ARQUITECTURA FINAL ──
+  1. Reglas DURAS (sin LLM, 85% de los casos):
+     - Keywords estadísticas → k=12, graph_depth=2
+     - < 8 palabras → k=4, sin grafo
+     - >= 15 palabras → k=11, graph_depth=2
+  2. LLM (solo 15% de casos ambiguos 8-14 palabras):
+     - Decide entre simple (k=5) y media (k=7)
+  3. Fallback heurístico (si LLM no disponible)
+
+── ARCHIVOS MODIFICADOS ──
+  agents/retrieval_strategist.py — método _apply_hard_rules() añadido
+  analyze() ahora: hard rules → LLM → heuristic fallback
