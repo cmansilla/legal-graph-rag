@@ -54,7 +54,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger("LexRAG")
 
 # =============================================================
-# INICIALIZACION GLOBAL (se ejecuta una vez al importar)
+# INICIALIZACION GLOBAL (se ejecuta una vez al importar)est
 # =============================================================
 load_dotenv()
 if not os.environ.get("GROQ_API_KEY"):
@@ -284,7 +284,7 @@ def retrieve_relevant(question, top_k=15, max_docs=3):
             resultados[doc_id] = meta['chunk_text']
             if len(resultados) >= max_docs:
                 break
-
+    logger.info(f"Recuperados {len(resultados)} documentos distintos para la pregunta. {resultados}")
     return resultados
 
 

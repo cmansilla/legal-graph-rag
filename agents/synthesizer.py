@@ -2,9 +2,12 @@ import asyncio
 import json
 from core.llm_clients import groq_client
 from core.config import logger
-from utils.logger_utils import save_query_log
+from utils.logger_utils import save_query_log, save_chunk_audit
 
-async def generate_rag_synthesis(query, decision, hyde_query, web_context, hybrid_context, graph_context, history=None):
+MAX_HISTORY_EXCHANGES = 3  # Mantener solo los últimos 3 intercambios (user+assistant)
+MAX_HISTORY_TOKENS = 4000  # Tokens máximos del historial antes de truncar
+
+async def generate_rag_synthesis(query, decision, hyde_query, web_context, hybrid_context, graph_context, history=None, hybrid_audit=None, graph_audit=None, elapsed=None):
     if history is None:
         history = []
         
@@ -33,8 +36,6 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
     await asyncio.sleep(0.01)
     
     models_to_try = [
-        "meta-llama/llama-4-maverick-17b-128e-instruct",
-        "openai/gpt-oss-120b",
         "moonshotai/kimi-k2-instruct-0905",
         "llama-3.3-70b-versatile",
         "mixtral-8x7b-32768",
@@ -43,9 +44,19 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
     
     messages = [{"role": "system", "content": "Eres un Agente RAG Avanzado actuando como Corte Suprema"}]
     
-    # Inyectar historial de conversación previo
-    for msg in history:
-        messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
+    # Inyectar historial de conversación previo (limitado a los últimos N intercambios)
+    if history:
+        # Mantener solo los últimos MAX_HISTORY_EXCHANGES intercambios
+        trimmed = history[-(MAX_HISTORY_EXCHANGES * 2):]
+        # Verificar tokens aproximados del historial
+        hist_tokens = sum(len(m.get("content", "")) // 4 for m in trimmed)
+        if hist_tokens > MAX_HISTORY_TOKENS:
+            # Truncar contenido de mensajes más antiguos si excede
+            for m in trimmed[:-1]:
+                if len(m.get("content", "")) > 500:
+                    m["content"] = m["content"][:500] + "... [truncado]"
+        for msg in trimmed:
+            messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
         
     # Añadir el prompt actual enriquecido
     messages.append({"role": "user", "content": prompt_magistrado})
@@ -75,6 +86,17 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
             
     if ans:
         save_query_log(query, ans, contexto_raw)
+
+        if hybrid_audit is not None or graph_audit is not None:
+            save_chunk_audit(
+                query=query,
+                hybrid_audit=hybrid_audit,
+                graph_audit=graph_audit,
+                response=ans,
+                decision=decision,
+                hyde_query=hyde_query,
+                elapsed=elapsed
+            )
         
         # Bloque Cuestionador LLaMA-3 (Preguntas de Seguimiento)
         try:
