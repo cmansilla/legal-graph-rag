@@ -1,16 +1,16 @@
 import asyncio
 import json
-from core.llm_clients import groq_client
+from core.llm_clients import groq_client, deepseek_client
 from core.config import logger
 from utils.logger_utils import save_query_log, save_chunk_audit
 
-MAX_HISTORY_EXCHANGES = 3  # Mantener solo los últimos 3 intercambios (user+assistant)
-MAX_HISTORY_TOKENS = 4000  # Tokens máximos del historial antes de truncar
+MAX_HISTORY_EXCHANGES = 3
+MAX_HISTORY_TOKENS = 4000
 
 async def generate_rag_synthesis(query, decision, hyde_query, web_context, hybrid_context, graph_context, history=None, hybrid_audit=None, graph_audit=None, elapsed=None):
     if history is None:
         history = []
-        
+
     if "WEB" in decision:
         contexto_raw = f"=== CONTEXTO WEB ===\n{web_context}"
     else:
@@ -34,56 +34,87 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
 
     yield {"data": json.dumps({"type": "info", "content": "🚀 Generando dictamen con Inteligencia Autónoma..."})}
     await asyncio.sleep(0.01)
-    
-    models_to_try = [
-        "moonshotai/kimi-k2-instruct-0905",
-        "llama-3.3-70b-versatile",
-        "mixtral-8x7b-32768",
-        "llama-3.1-8b-instant"
-    ]
-    
+
     messages = [{"role": "system", "content": "Eres un Agente RAG Avanzado actuando como Corte Suprema"}]
-    
-    # Inyectar historial de conversación previo (limitado a los últimos N intercambios)
+
+    # Inyectar historial
     if history:
-        # Mantener solo los últimos MAX_HISTORY_EXCHANGES intercambios
         trimmed = history[-(MAX_HISTORY_EXCHANGES * 2):]
-        # Verificar tokens aproximados del historial
         hist_tokens = sum(len(m.get("content", "")) // 4 for m in trimmed)
         if hist_tokens > MAX_HISTORY_TOKENS:
-            # Truncar contenido de mensajes más antiguos si excede
             for m in trimmed[:-1]:
                 if len(m.get("content", "")) > 500:
                     m["content"] = m["content"][:500] + "... [truncado]"
         for msg in trimmed:
             messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
-        
-    # Añadir el prompt actual enriquecido
+
     messages.append({"role": "user", "content": prompt_magistrado})
-    
+
     ans = ""
-    for model_name in models_to_try:
+    used_provider = ""
+
+    # --- LISTA DE PROVEEDORES/MODELOS EN ORDEN DE PRIORIDAD ---
+    # 1. DeepSeek V4 Flash (principal — más barato, mejor calidad)
+    # 2. Groq llama-3.3-70b (fallback principal)
+    # 3. Groq kimi-k2 (fallback)
+    # 4. Groq mixtral (fallback)
+    # 5. Groq llama-3.1-8b (último recurso)
+    # ===========================================================
+
+    # --- Intento 1: DeepSeek V4 Flash ---
+    if deepseek_client and not ans:
         try:
-            response = groq_client.chat.completions.create(
-                model=model_name,
+            logger.info("Intentando DeepSeek V4 Flash...")
+            response = deepseek_client.chat.completions.create(
+                model="deepseek-chat",
                 messages=messages,
                 temperature=0.1,
                 stream=True
             )
-            
+            provider_used = "DeepSeek"
             for chunk in response:
-                content = chunk.choices[0].delta.content
-                if content:
+                if chunk.choices[0].delta.content:
+                    content = chunk.choices[0].delta.content
                     ans += content
                     yield {"data": json.dumps({"type": "chunk", "content": content})}
                     await asyncio.sleep(0.01)
-            
-            break
-            
+            logger.info("Respuesta generada con DeepSeek V4 Flash")
         except Exception as e:
-            logger.warning(f"Error con modelo {model_name}: {e}. Intentando failover.")
-            continue
-            
+            logger.warning(f"DeepSeek falló: {e}. Cambiando a Groq...")
+            yield {"data": json.dumps({"type": "info", "content": "⚠️ DeepSeek no disponible, usando Groq..."})}
+            await asyncio.sleep(0.01)
+            ans = ""  # Reiniciar para que el fallback funcione
+
+    # --- Fallback: Groq (varios modelos en orden) ---
+    groq_models = [
+        "llama-3.3-70b-versatile",
+        "moonshotai/kimi-k2-instruct-0905",
+        "mixtral-8x7b-32768",
+        "llama-3.1-8b-instant"
+    ]
+
+    if not ans and groq_client:
+        for model_name in groq_models:
+            try:
+                logger.info(f"Intentando Groq {model_name}...")
+                response = groq_client.chat.completions.create(
+                    model=model_name,
+                    messages=messages,
+                    temperature=0.1,
+                    stream=True
+                )
+                for chunk in response:
+                    content = chunk.choices[0].delta.content
+                    if content:
+                        ans += content
+                        yield {"data": json.dumps({"type": "chunk", "content": content})}
+                        await asyncio.sleep(0.01)
+                logger.info(f"Respuesta generada con Groq {model_name}")
+                break
+            except Exception as e:
+                logger.warning(f"Error con Groq {model_name}: {e}. Intentando failover.")
+                continue
+
     if ans:
         save_query_log(query, ans, contexto_raw)
 
@@ -97,40 +128,40 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
                 hyde_query=hyde_query,
                 elapsed=elapsed
             )
-        
-        # Bloque Cuestionador LLaMA-3 (Preguntas de Seguimiento)
+
+        # Preguntas de seguimiento (siempre con Groq llama-3.1-8b, es rápido y barato)
         try:
             yield {"data": json.dumps({"type": "info", "content": "💡 Sintetizando hilos de seguimiento..."})}
             await asyncio.sleep(0.01)
-            
+
             follow_up_prompt = f"""Basado en el dictamen legal que acabas de emitir, redacta EXACTAMENTE 3 preguntas breves (máximo 12 palabras cada una) que un usuario podría hacer a continuación para profundizar el análisis.
 Retorna ÚNICAMENTE un objeto JSON válido con la siguiente estructura, sin formato Markdown ni saludos:
 {{"preguntas": ["Pregunta 1", "Pregunta 2", "Pregunta 3"]}}
 
 Dictamen:
 {ans[:2000]}..."""
-            
-            follow_up_response = groq_client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[{"role": "user", "content": follow_up_prompt}],
-                temperature=0.3
-            )
-            raw_json = follow_up_response.choices[0].message.content.strip()
-            
-            # Simple string cleaning to handle Markdown code blocks
-            if raw_json.startswith("```json"):
-                raw_json = raw_json[7:]
-            if raw_json.startswith("```"):
-                raw_json = raw_json[3:]
-            if raw_json.endswith("```"):
-                raw_json = raw_json[:-3]
-                
-            parsed_json = json.loads(raw_json.strip())
-            questions = parsed_json.get("preguntas", [])
-            
-            if questions and isinstance(questions, list):
-                yield {"data": json.dumps({"type": "follow_up", "content": questions[:3]})}
+
+            if groq_client:
+                follow_up_response = groq_client.chat.completions.create(
+                    model="llama-3.1-8b-instant",
+                    messages=[{"role": "user", "content": follow_up_prompt}],
+                    temperature=0.3
+                )
+                raw_json = follow_up_response.choices[0].message.content.strip()
+
+                if raw_json.startswith("```json"):
+                    raw_json = raw_json[7:]
+                if raw_json.startswith("```"):
+                    raw_json = raw_json[3:]
+                if raw_json.endswith("```"):
+                    raw_json = raw_json[:-3]
+
+                parsed_json = json.loads(raw_json.strip())
+                questions = parsed_json.get("preguntas", [])
+
+                if questions and isinstance(questions, list):
+                    yield {"data": json.dumps({"type": "follow_up", "content": questions[:3]})}
         except Exception as e:
             logger.warning(f"Error generando follow-ups: {e}")
-        
+
     yield {"data": "[DONE]"}
