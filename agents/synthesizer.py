@@ -25,11 +25,13 @@ CONTEXTO RECUPERADO:
 PREGUNTA DEL USUARIO: {query}
 
 INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
+0. RESPUESTA DIRECTA: Responde la pregunta del usuario en la PRIMERA FRASE. No empieces con "La consulta se refiere a..." o "Para abordar esta cuestión...". Ve directo al punto.
 1. RACIOCINIO DEDUCTIVO Y ESTADÍSTICO (GRAFOS): Utiliza intensivamente la sección 'ANÁLISIS DE PRECEDENTES Y CONEXIONES'. Si la pregunta inquiere sobre frecuencias (ej. "jueces con más casos" o "leyes más citadas"), DEBES contar los vínculos colaterales expuestos (los textos que dicen "x vincula colateralmente con: doc_1, doc_2...") como evidencia plena de cantidad y armar clasificaciones basados en estos nodos. NO te escudes en la falta de texto completo de esos documentos colaterales.
 2. LENGUAJE 100% JURÍDICO (PROHIBICIÓN TÉCNICA): Tu estructura de razonamiento debe presentarse como un dictamen constitucional puro. Está estrictamente PROHIBIDO revelar la arquitectura tecnológica que extrajo esta información (jamás digas "grafos", "nodos", "topología", "algoritmos" o "saltos" para explicar cómo obtuviste el dato documental). Sin embargo, si la Litis/Materia del caso (el contenido real de la sentencia) versa sobre temas de informática, tecnología o software, DEBES analizar esos hechos libremente aplicando los términos técnicos del campo que la Ley discute.
 3. RIGOR CITACIONAL: Cita invariablemente el identificador legible del documento (RTF N°, CAS. N°, EXP. N°) y la ruta al archivo. Ejemplo: "según **CAS. N° 15-2015 LAMBAYEQUE** (Jurisprudencia/1612215.html)".
 4. TONO Y ESTRUCTURA: Adopta un tono profesional, empático y conversacional, como un abogado asesorando a un colega. Estructura tu respuesta libremente en Markdown usando encabezados cortos, negritas y viñetas para que sea fácil de leer, sin necesidad de seguir un formato rígido o robótico.
 5. EXHAUSTIVIDAD VS INVENCIÓN: No inventes nombres o casos inexistentes. Si la respuesta requiere contar, debes contar exclusivamente sobre las conexiones documentales presentes en el prompt. Si definitivamente el contexto no provee ningún hilo, declara: "Información insuficiente en el corpus analizado para resolver esta cuestión".
+6. FORMATO DE CITAS: Al final de tu respuesta, agrega una sección "**Jurisprudencia citada:**" con formato de lista.
 """
 
     yield {"data": json.dumps({"type": "info", "content": "🚀 Generando dictamen con Inteligencia Autónoma..."})}
@@ -54,46 +56,20 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
     used_provider = ""
 
     # --- LISTA DE PROVEEDORES/MODELOS EN ORDEN DE PRIORIDAD ---
-    # 1. DeepSeek V4 Flash (principal — más barato, mejor calidad)
-    # 2. Groq llama-3.3-70b (fallback principal)
-    # 3. Groq kimi-k2 (fallback)
-    # 4. Groq mixtral (fallback)
-    # 5. Groq llama-3.1-8b (último recurso)
+    # 1. Groq llama-3.3-70b (principal — mejor calidad juridica)
+    # 2. DeepSeek V4 Flash (fallback)
+    # 3. Groq llama-4-scout-17b (fallback)
+    # 4. Groq llama-3.1-8b-instant (ultimo recurso)
     # ===========================================================
 
-    # --- Intento 1: DeepSeek V4 Flash ---
-    if deepseek_client and not ans:
-        try:
-            logger.info("Intentando DeepSeek V4 Flash...")
-            response = deepseek_client.chat.completions.create(
-                model="deepseek-chat",
-                messages=messages,
-                temperature=0.1,
-                stream=True
-            )
-            provider_used = "DeepSeek"
-            for chunk in response:
-                if chunk.choices[0].delta.content:
-                    content = chunk.choices[0].delta.content
-                    ans += content
-                    yield {"data": json.dumps({"type": "chunk", "content": content})}
-                    await asyncio.sleep(0.01)
-            logger.info("Respuesta generada con DeepSeek V4 Flash")
-        except Exception as e:
-            logger.warning(f"DeepSeek falló: {e}. Cambiando a Groq...")
-            yield {"data": json.dumps({"type": "info", "content": "⚠️ DeepSeek no disponible, usando Groq..."})}
-            await asyncio.sleep(0.01)
-            ans = ""  # Reiniciar para que el fallback funcione
-
-    # --- Fallback: Groq (varios modelos en orden) ---
+    # --- Intento 1: Groq llama-3.3-70b (principal) ---
     groq_models = [
         "llama-3.3-70b-versatile",
-        "moonshotai/kimi-k2-instruct-0905",
-        "mixtral-8x7b-32768",
+        "meta-llama/llama-4-scout-17b-16e-instruct",
         "llama-3.1-8b-instant"
     ]
 
-    if not ans and groq_client:
+    if groq_client and not ans:
         for model_name in groq_models:
             try:
                 logger.info(f"Intentando Groq {model_name}...")
@@ -114,6 +90,28 @@ INSTRUCCIONES CRÍTICAS (DE SEGUIMIENTO OBLIGATORIO):
             except Exception as e:
                 logger.warning(f"Error con Groq {model_name}: {e}. Intentando failover.")
                 continue
+
+    # --- Fallback: DeepSeek V4 Flash ---
+    if deepseek_client and not ans:
+        try:
+            logger.info("Intentando DeepSeek V4 Flash...")
+            response = deepseek_client.chat.completions.create(
+                model="deepseek-chat",
+                messages=messages,
+                temperature=0.1,
+                stream=True
+            )
+            for chunk in response:
+                if chunk.choices[0].delta.content:
+                    content = chunk.choices[0].delta.content
+                    ans += content
+                    yield {"data": json.dumps({"type": "chunk", "content": content})}
+                    await asyncio.sleep(0.01)
+            logger.info("Respuesta generada con DeepSeek V4 Flash")
+        except Exception as e:
+            logger.warning(f"DeepSeek falló: {e}.")
+            yield {"data": json.dumps({"type": "info", "content": "⚠️ DeepSeek no disponible"})}
+            await asyncio.sleep(0.01)
 
     if ans:
         save_query_log(query, ans, contexto_raw)

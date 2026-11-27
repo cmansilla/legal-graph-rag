@@ -64,7 +64,7 @@ async def run_console_query(query: str, history=None):
         strategy = get_strategist().analyze(query, decision, hyde)
         logger.info(f"🎯 Estrategia: {strategy['complexity']} | top_k={strategy['top_k']} | "
                     f"mode={strategy['retrieval_mode']} | graph={'S'+str(strategy['graph_depth']) if strategy['use_graph'] else 'N'}")
-        top_docs, text_context, hybrid_audit = get_hybrid_context(hyde, top_k=7, strategy=strategy)
+        top_docs, text_context, hybrid_audit = get_hybrid_context(hyde, top_k=5, strategy=strategy)
         logger.info("🕸️ Extrayendo Referencias Topológicas (Grafo)...")
         if strategy.get("use_graph", True):
             graph_context, graph_audit = get_graph_analyst().analyze(top_docs, query)

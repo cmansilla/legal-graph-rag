@@ -23,8 +23,8 @@ LINEA 2: Escribe una expansión muy profesional (1 frase) hipotética de la "Con
         if not groq_client: return 'LOCAL', query
         
         models_to_try = [
-            "moonshotai/kimi-k2-instruct-0905",
-            "llama-3.3-70b-versatile"
+            "llama-3.3-70b-versatile",
+            "meta-llama/llama-4-scout-17b-16e-instruct"
         ]
         
         res = None

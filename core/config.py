@@ -16,6 +16,8 @@ GRAPH_PATH = "data/indices/graph_juris_pro.pkl"
 BM25_PATH = "data/indices/bm25_index_pro.pkl"
 METADATA_DOCS_PATH = "data/metadata_docs.json"
 JURISPRUDENCIA_DIR = "Jurisprudencia"
+# Los nuevos documentos procesados por Groq Batch API
+GROQ_BATCH_PATTERN = "data_raw/rag_listo_batch_groq_*.json"
 
 MAX_TOKENS_CONTEXT = 30000 
 CHUNK_SIZE = 512

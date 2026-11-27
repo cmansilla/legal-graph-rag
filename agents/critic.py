@@ -79,34 +79,45 @@ class CriticAgent:
         self._loaded = False
 
     def _load_metadata(self):
-        """Carga metadata_docs.json y construye índices."""
+        """Carga metadata_docs.json y los nuevos JSONs de Groq Batch."""
         if self._loaded:
             return
+        
+        # Cargar metadata original (HTMLs)
         path = METADATA_DOCS_PATH
-        if not path or not os.path.exists(path):
-            logger.warning(f"⚠️ Critic: metadata no encontrado en {path}")
-            self._loaded = True
-            return
-
-        try:
-            with open(path, 'r', encoding='utf-8') as f:
-                self.metadata = json.load(f)
-
-            # Índice reverso: identificador -> doc_id
-            for doc_id, meta in self.metadata.items():
-                id_str = meta.get("identificador", "")
-                if id_str:
-                    # Normalizar: quitar espacios múltiples, mayúsculas
-                    norm = self._normalize_id(id_str)
-                    self.id2doc[norm] = doc_id
-                    # También indexar con el doc_id desnudo
+        if path and os.path.exists(path):
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    self.metadata = json.load(f)
+                for doc_id, meta in self.metadata.items():
+                    id_str = meta.get("identificador", "")
+                    if id_str:
+                        norm = self._normalize_id(id_str)
+                        self.id2doc[norm] = doc_id
                     doc_clean = doc_id.replace(".html", "")
                     self.id2doc[doc_clean] = doc_id
-
-            logger.info(f"✅ Critic: {len(self.metadata)} docs, "
-                        f"{len(self.id2doc)} índices de identificación")
-        except Exception as e:
-            logger.warning(f"⚠️ Critic: error cargando metadata: {e}")
+                logger.info(f"✅ Critic: {len(self.metadata)} docs HTML cargados")
+            except Exception as e:
+                logger.warning(f"⚠️ Critic: error cargando metadata: {e}")
+        
+        # Cargar nuevos documentos de Groq Batch (JSON)
+        import glob as _glob
+        groq_files = sorted(_glob.glob("data_raw/rag_listo_batch_groq_*.json"))
+        if groq_files:
+            groq_count = 0
+            for gf in groq_files:
+                try:
+                    with open(gf, 'r', encoding='utf-8') as f:
+                        docs = json.load(f)
+                    for doc in docs:
+                        did = doc.get("id_documento", "")
+                        if did:
+                            self.id2doc[did] = did
+                            groq_count += 1
+                except Exception as e:
+                    logger.warning(f"⚠️ Critic: error cargando {gf}: {e}")
+            logger.info(f"✅ Critic: {groq_count} docs Groq Batch cargados")
+        
         self._loaded = True
 
     def _normalize_id(self, s):
@@ -129,6 +140,7 @@ class CriticAgent:
         citations += self._citar_rtf(response_text)
         citations += self._citar_html_suelto(response_text)
         citations += self._citar_numeros_docid(response_text)
+        citations += self._citar_leyes(response_text)
         return self._deduplicar(citations)
 
     # ── Patrones de extracción ─────────────────────────
@@ -195,10 +207,25 @@ class CriticAgent:
         for m in re.finditer(r'(?<!\d)(\d{6,7})(?!\d)', text):
             num = m.group(1)
             doc_candidate = f"{num}.html"
-            # Evitar duplicados
             if any(c.doc_id == doc_candidate for c in out):
                 continue
             out.append(Citation(doc_id=doc_candidate, texto_cita=m.group(0),
+                                linea=text[:m.start()].count('\n') + 1))
+        return out
+
+    def _citar_leyes(self, text):
+        """Pattern 7: Leyes, Decretos y Codigos citados"""
+        out = []
+        for m in re.finditer(
+            r'(Ley\s*[N°º\.]+\s*\d+(?:[-\s]\d+)*|'
+            r'D\.?L\.?\s*[N°º\.]*\s*\d+(?:[-\s]\d+)*|'
+            r'Decreto\s+(Legislativo|Supremo|de\s+Urgencia)\s*[N°º\.]*\s*\d+(?:[-\s]\d+)*|'
+            r'Codigo\s+(Civil|Procesal\s+Civil|Penal|Tributario|del\s+Trabajo|'
+            r'de\s+Comercio|de\s+los\s+Ninos|del\s+Ambiente))',
+            text, re.IGNORECASE
+        ):
+            ident = re.sub(r'\s+', ' ', m.group(0).strip())
+            out.append(Citation(identificador=ident, texto_cita=m.group(0),
                                 linea=text[:m.start()].count('\n') + 1))
         return out
 
@@ -258,12 +285,27 @@ class CriticAgent:
             if c.doc_id:
                 # Tenemos un doc_id concreto → podemos verificar
                 c.hallucinated = not c.exists_in_corpus
+                # Ademas, si existe pero NO estaba en el contexto entregado, es sospechoso
+                if c.exists_in_corpus and not c.was_in_context:
+                    c.hallucinated = True  # Existe pero no se uso como contexto = alucinacion
             else:
-                # Solo tenemos identificador textual (EXP. N°, CAS. N°)
-                # El LLM pudo reformatearlo; no podemos verificar con certeza
-                c.hallucinated = False  # No lo marcamos como alucinación
-                if not c.exists_in_corpus:
-                    c.exists_in_corpus = None  # indeterminate
+                # Solo tenemos identificador textual (EXP. N°, CAS. N°, Ley...)
+                # Si no encontramos el identificador en el corpus, es alucinacion
+                # Si existe pero no estaba en contexto, tambien
+                if c.identificador:
+                    norm = self._normalize_id(c.identificador)
+                    if norm in self.id2doc:
+                        c.doc_id = self.id2doc[norm]
+                        c.exists_in_corpus = True
+                        c.was_in_context = c.doc_id in context_doc_ids
+                        c.hallucinated = not c.was_in_context
+                    elif "CODIGO" in norm or "LEY" in norm or "D.L." in norm or "DECRETO" in norm:
+                        # Leyes y codigos: si no estan en corpus, son sospechosas
+                        c.hallucinated = True
+                    else:
+                        c.hallucinated = True
+                else:
+                    c.hallucinated = False  # Indeterminado, sin identificador
 
         return citations
 

@@ -37,3 +37,14 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+*.tar
+*.tar.gz
+*.deb
+backup*/
+batch*/
+output/
+data_raw_old/
+.venv/
+legacy/
+reports/
+ARCHIVOS_A_BUSCAR.txt

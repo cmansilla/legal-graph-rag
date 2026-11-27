@@ -8,6 +8,16 @@ from rank_bm25 import BM25Okapi
 from core.config import FAISS_INDEX_PATH, FAISS_META_PATH, BM25_PATH, METADATA_DOCS_PATH
 from core.embedding import embedding_model
 
+# ─── Reranker cross-encoder (carga diferida) ───
+_RERANKER = None
+
+def _get_reranker():
+    global _RERANKER
+    if _RERANKER is None:
+        from sentence_transformers import CrossEncoder
+        _RERANKER = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+    return _RERANKER
+
 # Cache de metadatos legibles (RTF N°, CAS. N°, EXP. N°)
 _docs_metadata = {}
 def _load_docs_metadata():
@@ -146,6 +156,28 @@ def get_hybrid_context(hyde_query, top_k=7, strategy=None):
     all_unique_docs = list(dict.fromkeys([meta_data[i]["doc_id"] for i in top_chunks_indices]))
     final_top_docs = all_unique_docs[:top_k]
     
+    # ─── Reranking cross-encoder sobre los top_k candidatos ───
+    reranker_scores = []
+    if len(all_unique_docs) > top_k:
+        reranker = _get_reranker()
+        texts_for_rerank = [meta_data[i]['text'][:1000] for i in top_chunks_indices if meta_data[i]['doc_id'] in all_unique_docs[:top_k * 2]]
+        doc_ids_for_rerank = [meta_data[i]['doc_id'] for i in top_chunks_indices if meta_data[i]['doc_id'] in all_unique_docs[:top_k * 2]]
+        pairs = [[hyde_query, t] for t in texts_for_rerank]
+        rerank_scores = reranker.predict(pairs)
+        scored = list(zip(doc_ids_for_rerank, rerank_scores))
+        seen = set()
+        unique_scored = []
+        for did, sc in scored:
+            if did not in seen:
+                seen.add(did)
+                unique_scored.append((did, sc))
+        unique_scored.sort(key=lambda x: x[1], reverse=True)
+        final_top_docs = [d for d, _ in unique_scored[:top_k]]
+        reranker_scores = [{"doc_id": d, "score": float(s)} for d, s in unique_scored[:top_k]]
+
+    audit["reranker_used"] = len(all_unique_docs) > top_k
+    audit["reranker_scores"] = reranker_scores
+
     # Audit: docs finales seleccionados
     audit["final_docs"] = [{
         "doc_id": d,
